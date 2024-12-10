@@ -1,0 +1,85 @@
+\documentclass{article}
+
+\title{Rapport architecture microprocesseur}
+\author{HORNERO Baptiste \\ HERZLICH Raphaël \\ HELARY Axel}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Architecture du processeur}
+
+L'architecture du processeur est une architecture proche de l'architecture Risc-V,
+les instructions sont codées sur 32 bits. On a 16 registres accessibles,
+numérotés de 0 à 15, chacun de taille 32. On ajoute un register de 32
+bits correspondant à la position du pointeur sur la ROM, qu'on appelle P.
+On se munit de trois flags : ZF (dernière opération a renvoyé 0 ou non), SF
+(positivité de la dernière opération), OF (overflow de la dernière
+opération arithmétique) tous de taille 1.
+
+
+\section*{Instructions}
+ 
+Le set d'instructions est le suivant:
+
+\begin{center}
+
+\begin{tabular}{| c || c || c | c |}
+    Instruction & Encodage & Description & Arguments\\ \hline
+    NOP & 0000 0000 & No opération &\\ \hline
+    ADD & 0000 0001 & Addition & rs1 rs2\\ \hline
+    SUB & 0000 0010 & Soustraction & rs1 rs2 \\ \hline
+    MUL & 0000 0011 & Multiplication & rs1 rs2 \\ \hline
+    AND & 0000 0100 & Et logique & rs1 rs2\\ \hline
+    NOT & 0000 0101 & Non & rs1\\ \hline
+    OR  & 0000 0110 & Ou logique & rs1 rs2\\ \hline
+    XOR & 0000 0111 & Xor logique & rs1 rs2\\ \hline
+    SLL & 0000 1000 & Décalage gauche logique & rs1 \\ \hline
+    SRL & 0000 1001 & Décalage droite logique & rs1\\ \hline
+\end{tabular}
+
+et :
+
+\begin{tabular}{| c || c | c|| c |  c  |}
+    Instruction & Encodage & Description & Arguments & Description
+formelle \\ \hline
+    MOV   & 0000 1010 & Met un registre à la valeur d'un autre registre &
+rs1 rs2  & rs1 <- rs2\\ \hline
+    MOVI  & 0000 1011 & Met une valeur immédiate dans un registre & rs1
+immediate & rs1 <- immediate\\\hline
+    JMP   & 0000 1100 & Jump à une valeur & immediate & P <- immediate\\ \hline
+    CMP   & 0000 1101 & Compare deux valeurs & rs1 rs2& Mise à jour des
+flags\\ \hline
+    JE    & 0000 1110 & Jump si égal (ZF = 1) & immediate&  Si ZF = 1
+alors P <- immediate \\ \hline
+    JNE   & 0000 1111 & Jump si non égal (ZF = 0) & immediate& Si ZF =0
+alors P<- immediate\\ \hline
+    JGE   & 0001 0000 & Jump si plus grand ou égal & immediate& Si OF=SF
+alors P <- immediate\\ \hline
+    LOAD  & 0001 0001 & Lit dans la ram & rs1 rs2& rs1 <- R[rs2]\\ \hline
+    STORE & 0001 0010 & Stocke dans la ram & rs1 rs2& R[rs1] <- rs2\\ \hline
+\end{tabular}
+
+
+\end{center}
+
+\section*{Si le temps nous le permet}
+
+\subsection*{Interface graphique}
+
+Implémentation d'une petite interface graphique
+et des instructions suivantes pour gérer l'interface
+
+\begin{center}
+
+\begin{tabular}{| c || c || c | c |}
+    Instruction & Encodage & Description & Arguments\\ \hline
+    PIX   & 0010 0001 & Change la valeur du pixel & rs1 rs2\\ \hline
+    CLEAR & 0010 0010 & Met toute l'interface graphique à 0 & \\ \hline
+    
+\end{tabular}
+
+\end{center}
+
+\end{document}
