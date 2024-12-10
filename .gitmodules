@@ -1,0 +1,3 @@
+[submodule "carotte.py"]
+	path = carotte.py
+	url = https://github.com/TWal/carotte.py
