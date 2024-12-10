@@ -13,19 +13,19 @@ def mux4(bit_array):
     x2 = Slice(2,4, bit_array)
     x10, x11, x12, x13 = mux2(x1)
     x20, x21, x22, x23 = mux2(x2)
-    return (And(x10, x21),
+    return (And(x10, x20),
             And(x10, x21),
             And(x10, x22),
             And(x10, x23),
-            And(x11, x21),
+            And(x11, x20),
             And(x11, x21),
             And(x11, x22),
             And(x11, x23),
-            And(x12, x21),
+            And(x12, x20),
             And(x12, x21),
             And(x12, x22),
             And(x12, x23),
-            And(x13, x21),
+            And(x13, x20),
             And(x13, x21),
             And(x13, x22),
             And(x13, x23))
