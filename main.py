@@ -1,8 +1,8 @@
 from lib_carotte import *
 
 # Importation des fonctions nécessaires
-import utils
-import alu
+import Utils.utils as utils
+import Utils.alu as alu
 
 from examples.nadder import *
 
