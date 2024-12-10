@@ -1,0 +1,40 @@
+INPUT _input_0, _input_1, _input_2
+OUTPUT result, out_carry
+VAR
+  _input_0 : 4, _input_1 : 4, _input_2, _l_10, _l_11, _l_12, _l_13, _l_14, 
+  _l_15, _l_16, _l_17 : 2, _l_18, _l_19, _l_20, _l_21, _l_22, _l_23, 
+  _l_24, _l_25 : 3, _l_26, _l_27, _l_28, _l_29, _l_3, _l_30, _l_31, _l_4, 
+  _l_5, _l_6, _l_7, _l_8, _l_9, out_carry, result : 4
+IN
+_l_3 = SELECT 0 _input_0
+_l_4 = SELECT 0 _input_1
+_l_5 = XOR _l_3 _l_4
+_l_6 = XOR _l_5 _input_2
+_l_7 = AND _l_5 _input_2
+_l_8 = AND _l_3 _l_4
+_l_9 = OR _l_7 _l_8
+_l_10 = SELECT 1 _input_0
+_l_11 = SELECT 1 _input_1
+_l_12 = XOR _l_10 _l_11
+_l_13 = XOR _l_12 _l_9
+_l_14 = AND _l_12 _l_9
+_l_15 = AND _l_10 _l_11
+_l_16 = OR _l_14 _l_15
+_l_17 = CONCAT _l_6 _l_13
+_l_18 = SELECT 2 _input_0
+_l_19 = SELECT 2 _input_1
+_l_20 = XOR _l_18 _l_19
+_l_21 = XOR _l_20 _l_16
+_l_22 = AND _l_20 _l_16
+_l_23 = AND _l_18 _l_19
+_l_24 = OR _l_22 _l_23
+_l_25 = CONCAT _l_17 _l_21
+_l_26 = SELECT 3 _input_0
+_l_27 = SELECT 3 _input_1
+_l_28 = XOR _l_26 _l_27
+_l_29 = XOR _l_28 _l_24
+_l_30 = AND _l_28 _l_24
+_l_31 = AND _l_26 _l_27
+out_carry = OR _l_30 _l_31
+result = CONCAT _l_25 _l_29
+
