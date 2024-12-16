@@ -35,3 +35,16 @@ def or4(x1, x2, x3, x4):
 
 def or6(x1, x2, x3, x4, x5, x6):
     return Or(Or(x1, x2), or4(x3, x4, x5, x6))
+
+def full_adder(a, b, c):
+    tmp = a ^ b
+    return (tmp ^ c, (tmp & c) | (a & b))
+
+def n_adder(a, b):
+    assert(a.bus_size == b.bus_size)
+    c = Constant("0")
+    (s, c) = full_adder(a[0], b[0], c) # Treat the 0 case separately since variables have a bus size >= 1
+    for i in range(1, a.bus_size):
+        (s_i, c) = full_adder(a[i], b[i], c)
+        s = s + s_i
+    return (s, c)
