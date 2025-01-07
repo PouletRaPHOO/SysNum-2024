@@ -14,9 +14,9 @@ allow_ribbon_logic_operations(True)
 def main():
 
 
-    ZF = Reg(Defer(32, lambda: zf_temp))
-    SF = Reg(Defer(32, lambda: sf_temp))
-    OF = Reg(Defer(32, lambda: of_temp))
+    ZF = Reg(Defer(1, lambda: zf_temp))
+    SF = Reg(Defer(1, lambda: sf_temp))
+    OF = Reg(Defer(1, lambda: of_temp))
 
     REG0 = Reg(Defer(32, lambda: reg0_temp))
     REG1 = Reg(Defer(32, lambda: reg1_temp))
@@ -67,7 +67,7 @@ def main():
 
     is_noop,is_ari, is_bool, unary, is_jump, is_mem, is_mov, is_movi,is_cmp,_,_,_,_,_,_,_ = mux4(id_code)
     
-    arg2 = Mux(Or(is_jump,is_movi),treated_arg2, Concat("000000000000", arg2_raw) ) #TODO mieux faire ça (il faut ptet concat des 1 et mettre un constant)
+    arg2 = Mux(Or(is_jump,is_movi),treated_arg2, Concat(Constant("000000000000"), arg2_raw)) #TODO mieux faire ça (il faut ptet concat des 1 et mettre un constant)
 
     (n_p, _)  = adder(P, Constant(Un), Constant("0"))
 
@@ -83,11 +83,14 @@ def main():
 
     isflagwritingneeded = or4(is_ari, is_bool, unary, Or(is_cmp, Or(is_mov, And(is_mem,c1))))
 
-    isloadneeded = is_mem & c2
+    is_load_needed = is_mem & c2
 
-    raminho = RAM(16,32,treated_arg2,is_load_needed,treated_arg1,treated_arg2)
+    arg2_ram = Slice(16,32, treated_arg2)
+    arg1_ram = Slice(16,32, treated_arg1)
 
-    finalresult = Mux(is_mem,Mux(is_mov, Mux(is_movi,result,arg2_raw), treated_arg2),raminho)
+    raminho = RAM(16,32,arg2_ram,is_load_needed,arg1_ram,treated_arg2)
+
+    finalresult = Mux(is_mem,Mux(is_mov, Mux(is_movi,result,arg2), treated_arg2),raminho)
 
     reg0_temp = Mux(And(iswritingneeded,x0), REG0, result )
     reg1_temp = Mux(And(iswritingneeded,x1), REG1, result )
@@ -123,6 +126,6 @@ def main():
     ))
 
     p_temp = Mux(is_really_jumping, n_p, arg2 )
-    P.set_as_output("P")
+
 
 main()
