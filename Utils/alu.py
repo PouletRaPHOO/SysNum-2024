@@ -58,3 +58,5 @@ def Alu(is_ari, is_bool, is_cmp, unary, add_code, arg1, arg2):
         _,is_not, is_sll, is_srl,_,_,_,_,_,_,_,_,_,_,_,_ = mux4(add_code)
         if is_not:
             
+        if is_sll:
+            of, res = sll()
