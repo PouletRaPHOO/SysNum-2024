@@ -1,8 +1,8 @@
 from lib_carotte import *
 
 # Importation des fonctions nécessaires
-import Utils.utils as utils
-import Utils.alu as alu
+from Utils.utils import *
+from Utils.alu import *
 
 from examples.nadder import *
 
@@ -72,6 +72,11 @@ def main():
     (n_p, _)  = adder(P, Constant(Un), Constant("0"))
 
     _,c1,c2,c3,c4,_,_,_,_,_,_,_,_,_,_,_ = mux4(additional_code)
+
+
+    result = Constant("0") #Ici mettre résultat de l'opération
+
+    iswritingneeded = or4(is_ari, is_bool, unary, Or(is_mov, And(is_mem,c1)))
 
 
     is_really_jumping = And(is_jump, or4(
