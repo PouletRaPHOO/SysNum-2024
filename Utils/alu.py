@@ -18,26 +18,26 @@ def Alu(is_ari, is_bool, is_cmp, add_code, arg1, arg2):
         _,is_and,is_or,is_xor,_,_,_,_,_,_,_,_,_,_,_,_ = mux4(add_code)
         if is_and:
             r  = And(arg1, arg2)
-            of = 0
-            zf = 0
+            of = Constant("0")
+            zf = Constant("0")
             if r == Constant("0"):
-                zf = 1
+                zf = Constant("1")
             sf = r[0]
             return (And(arg1,arg2), of, zf, sf) 
         elif is_or:
             r  = And(arg1, arg2)
-            of = 0
-            zf = 0
+            of = Constant("0")
+            zf = Constant("0")
             if r == Constant("0"):
-                zf = 1
+                zf = Constant("1")
             sf = r[0]
             return (Or(arg1,arg2), of, zf, sf)
         elif is_xor:
             r  = And(arg1, arg2)
-            of = 0
-            zf = 0
+            of = Constant("0")
+            zf = Constant("0")
             if r == Constant("0"):
-                zf = 1
+                zf = Constant("1")
             sf = r[0]
             return (Xor(arg1,arg2), of, zf, sf)
     elif is_cmp:

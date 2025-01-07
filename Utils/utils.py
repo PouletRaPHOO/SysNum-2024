@@ -76,4 +76,9 @@ def sll(a, n):
     overflow = Constant("0")
     if Slice(0, n, feur2) != feur:
         overlow = Constant("1")
+    return (overflow, Slice(n, feur2.bus_size, feur2))
+
+def srl(a, n):
+    feur = Constant(a[0]*n)
+    feur2 = Concat(feur, a)
     return Slice(n, feur2.bus_size, feur2)
