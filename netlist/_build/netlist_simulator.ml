@@ -92,13 +92,9 @@ let dobinop n val1 val2 = match val1,val2 with
     | VBit b, VBit b2 -> VBit( (choose_binop n ) b b2 )
     | VBit b, VBitArray a | VBitArray a, VBit b ->
       VBitArray (Array.map (fun x -> choose_binop n b x) a )
-    | VBitArray a1, VBitArray a2 -> VBitArray (
-        let a = Array.make (min (Array.length a1) (Array.length a2) ) false in
-        for j = 0 to (Array.length a) -1 do
-          a.(j) <- (choose_binop n) (a1.(j)) (a2.(j))
-        done;
-        a
-      )
+    | VBitArray a1, VBitArray a2 -> VBitArray(
+        Array.init (min (Array.length a1) (Array.length a2) )
+            (fun j -> (choose_binop n) (a1.(j)) (a2.(j))))
 
 let rec concat val1 val2 = match val1,val2 with
     | VBit b, VBit b2 ->  VBitArray [|b;b2|]
@@ -185,7 +181,7 @@ let pretty_print v ident= match v with
   | VBitArray a -> Printf.printf "=> %s = " ident; Array.iter (fun x->
       Printf.printf "%d" (Obj.magic x)) a; Printf.printf "\n"
 
-let rom_folder = "test"
+let rom_folder = "roms"
 
 let prep_name_file s =
   String.concat "" [rom_folder; "/"; s; ".rom"]
