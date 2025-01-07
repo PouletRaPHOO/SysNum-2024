@@ -76,4 +76,4 @@ def sll(a, n):
     overflow = Constant("0")
     if Slice(0, n, feur2) != feur:
         overlow = Constant("1")
-    return , Slice(n, feur2.bus_size, feur2)
+    return Slice(n, feur2.bus_size, feur2)
