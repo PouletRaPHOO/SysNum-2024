@@ -15,28 +15,13 @@ def mux4(bit_array):
     x2 = Slice(2,4, bit_array)
     x10, x11, x12, x13 = mux2(x1)
     x20, x21, x22, x23 = mux2(x2)
-    return (And(x10, x20),
-            And(x10, x21),
-            And(x10, x22),
-            And(x10, x23),
-            And(x11, x20),
-            And(x11, x21),
-            And(x11, x22),
-            And(x11, x23),
-            And(x12, x20),
-            And(x12, x21),
-            And(x12, x22),
-            And(x12, x23),
-            And(x13, x20),
-            And(x13, x21),
-            And(x13, x22),
-            And(x13, x23))
+    return x10&x20, x10&x21,x10&x22, x10&x23,x11&x20, x11& x21,x11&x22, x11&x23, x12&x20, x12&x21, x12&x22, x12&x23, x13&x20, x13&x21, x13&x22, x13& x23
 
 def or4(x1, x2, x3, x4):
-    return Or(Or(x3,x4),Or(x1, x2))
+    return (x3 |x4) | (x1 | x2)
 
 def or6(x1, x2, x3, x4, x5, x6):
-    return Or(Or(x1, x2), or4(x3, x4, x5, x6))
+    return (x1 | x2) | or4(x3, x4, x5, x6)
 
 def or8(x1,x2,x3,x4,x5,x6,x7,x8):
     return Or(or4(x1,x2,x3,x4),or4(x5,x6,x7,x8))
