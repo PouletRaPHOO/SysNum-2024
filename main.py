@@ -124,3 +124,5 @@ def main():
 
     p_temp = Mux(is_really_jumping, n_p, arg2 )
     P.set_as_output("P")
+
+main()
