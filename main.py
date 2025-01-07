@@ -67,7 +67,7 @@ def main():
 
     is_noop,is_ari, is_bool, unary, is_jump, is_mem, is_mov, is_movi,is_cmp,_,_,_,_,_,_,_ = mux4(id_code)
     
-    arg2 = Mux(Or(is_jump,is_movi),treated_arg2, Concat("000000000000", arg2_raw) )
+    arg2 = Mux(Or(is_jump,is_movi),treated_arg2, Concat("000000000000", arg2_raw) ) #TODO mieux faire ça (il faut ptet concat des 1 et mettre un constant)
 
     (n_p, _)  = adder(P, Constant(Un), Constant("0"))
 
@@ -76,16 +76,18 @@ def main():
 
     result,zf,sf,of = Constant("0") #Ici mettre résultat de l'opération
 
-    finalresult = Mux(is_mov, Mux(is_movi,result,arg2_raw), treated_arg2)
+
+
 
     iswritingneeded = or4(is_ari, is_bool, unary, Or(is_mov, And(is_mem,c1)))
 
     isflagwritingneeded = or4(is_ari, is_bool, unary, Or(is_cmp, Or(is_mov, And(is_mem,c1))))
 
+    isloadneeded = is_mem & c2
 
-    if is_mem:
-        if c1:
-        finalresult =
+    raminho = RAM(17,32,treated_arg2,is_load_needed,treated_arg1,treated_arg2)
+
+    finalresult = Mux(is_mem,Mux(is_mov, Mux(is_movi,result,arg2_raw), treated_arg2),raminho)
 
     reg0_temp = Mux(And(iswritingneeded,x0), REG0, result )
     reg1_temp = Mux(And(iswritingneeded,x1), REG1, result )
