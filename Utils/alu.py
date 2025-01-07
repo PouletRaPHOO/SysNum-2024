@@ -61,6 +61,6 @@ def Alu(is_ari, is_bool, is_cmp, unary, add_code, arg1, arg2):
             return (not_arg, Constant("0"), is_zero(not_arg), s[0])
         if is_srl:
             srl_arg = srl(arg1,1)
-            return ()
+            return (srl_arg, Constant("0"), is_zero(not_arg), s[0])
         if is_sll:
             of, res = sll()
