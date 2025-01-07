@@ -74,7 +74,7 @@ def main():
     _,c1,c2,c3,c4,_,_,_,_,_,_,_,_,_,_,_ = mux4(additional_code)
 
 
-    result,zf,sf,of = Constant("0") #Ici mettre résultat de l'opération
+    result,of,zf,sf =  Alu(is_ari,is_bool,is_cmp,unary,additional_code, treated_arg1, treated_arg2)
 
 
 
@@ -85,7 +85,7 @@ def main():
 
     isloadneeded = is_mem & c2
 
-    raminho = RAM(17,32,treated_arg2,is_load_needed,treated_arg1,treated_arg2)
+    raminho = RAM(16,32,treated_arg2,is_load_needed,treated_arg1,treated_arg2)
 
     finalresult = Mux(is_mem,Mux(is_mov, Mux(is_movi,result,arg2_raw), treated_arg2),raminho)
 
