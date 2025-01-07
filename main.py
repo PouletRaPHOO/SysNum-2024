@@ -74,10 +74,44 @@ def main():
     _,c1,c2,c3,c4,_,_,_,_,_,_,_,_,_,_,_ = mux4(additional_code)
 
 
-    result = Constant("0") #Ici mettre résultat de l'opération
+    result,zf,sf,of = Constant("0") #Ici mettre résultat de l'opération
+
+    finalresult = Mux(is_mov, Mux(is_movi,result,arg2_raw), treated_arg2)
 
     iswritingneeded = or4(is_ari, is_bool, unary, Or(is_mov, And(is_mem,c1)))
 
+    isflagwritingneeded = or4(is_ari, is_bool, unary, Or(is_cmp, Or(is_mov, And(is_mem,c1))))
+
+
+    if is_mem:
+        if c1:
+        finalresult =
+
+    reg0_temp = Mux(And(iswritingneeded,x0), REG0, result )
+    reg1_temp = Mux(And(iswritingneeded,x1), REG1, result )
+    reg2_temp = Mux(And(iswritingneeded,x2), REG2, result )
+    reg3_temp = Mux(And(iswritingneeded,x3), REG3, result )
+    reg4_temp = Mux(And(iswritingneeded,x4), REG4, result )
+    reg5_temp = Mux(And(iswritingneeded,x5), REG5, result )
+    reg6_temp = Mux(And(iswritingneeded,x6), REG6, result )
+    reg7_temp = Mux(And(iswritingneeded,x7), REG7, result )
+    reg8_temp = Mux(And(iswritingneeded,x8), REG8, result )
+    reg9_temp = Mux(And(iswritingneeded,x9), REG9, result )
+    reg10_temp = Mux(And(iswritingneeded,x10), REG10, result )
+    reg11_temp = Mux(And(iswritingneeded,x11), REG11, result )
+    reg12_temp = Mux(And(iswritingneeded,x12), REG12, result )
+    reg13_temp = Mux(And(iswritingneeded,x13), REG13, result )
+    reg14_temp = Mux(And(iswritingneeded,x14), REG14, result )
+    reg15_temp = Mux(And(iswritingneeded,x15), REG15, result )
+
+    #Enfer sur terre (le 3)
+
+
+
+
+    zf_temp = Mux(And(isflagwritingneeded,x15), ZF, zf )
+    sf_temp = Mux(And(isflagwritingneeded,x15), SF, sf )
+    of_temp = Mux(And(isflagwritingneeded,x15), OF, of )
 
     is_really_jumping = And(is_jump, or4(
         c1, #jmp
