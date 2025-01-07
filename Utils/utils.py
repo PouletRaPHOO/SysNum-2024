@@ -1,5 +1,7 @@
 from lib_carotte import *
 
+Un = "00000000000000000000000000000001"
+
 def mux2(bit_array):
     x1 = bit_array[0]
     x2 = bit_array[1]
@@ -36,6 +38,9 @@ def or4(x1, x2, x3, x4):
 def or6(x1, x2, x3, x4, x5, x6):
     return Or(Or(x1, x2), or4(x3, x4, x5, x6))
 
+def or8(x1,x2,x3,x4,x5,x6,x7,x8):
+    return Or(or4(x1,x2,x3,x4),or4(x5,x6,x7,x8))
+
 def full_adder(a, b, c):
     tmp = a ^ b
     return (tmp ^ c, (tmp & c) | (a & b))
@@ -48,3 +53,19 @@ def n_adder(a, b):
         (s_i, c) = full_adder(a[i], b[i], c)
         s = s + s_i
     return (s, c)
+
+def is_zero(a):
+    if a == Constant("0"):
+        return Un
+    else : return Constant("0")
+
+def bin_to_int(a):
+    k = len(a)
+    s = 0
+    for i in range(k):
+        s += a[i]*(2**(k-i-1))
+    return s
+    
+def oppose(a):
+    not_a = Not(a)
+    return n_adder(not_a, Un)
