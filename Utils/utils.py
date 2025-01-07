@@ -55,8 +55,8 @@ def n_adder(a, b):
     return (s, c)
 
 def is_zero(a):
-    if a == Constant("0"):
-        return Un
+    if a == Constant("0"*(a.bus_size)):
+        return Constant("1")
     else : return Constant("0")
 
 def bin_to_int(a):
