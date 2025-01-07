@@ -1,6 +1,5 @@
 from lib_carotte import *
 from Utils.utils import *
-#feur
 
 def Alu(is_ari, is_bool, is_cmp, add_code, arg1, arg2):
     if is_ari:
@@ -12,7 +11,16 @@ def Alu(is_ari, is_bool, is_cmp, add_code, arg1, arg2):
             s,c = n_adder(arg1, oppose(arg2))
             return (s, c, is_zero(s), s[0])
         if is_mul:
-            s,c = Constant("0"), Constant("0")
+            s, c = Constant("0"*32), Constant("0")
+            temp, ctemp = Constant("0"*32), Constant("0")
+            for i in range(32):
+                if arg1[0]:
+                    ctemp, temp = sll(arg2, i)
+                    c = Or(c, ctemp)
+                    s, ctemp = n_adder(s, temp)
+                    c = Or(c, ctemp)
+            return (s, c, is_zero(s), s[0])
+
             
     elif is_bool:
         _,is_and,is_or,is_xor,_,_,_,_,_,_,_,_,_,_,_,_ = mux4(add_code)
