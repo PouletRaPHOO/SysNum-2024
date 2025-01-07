@@ -69,3 +69,11 @@ def bin_to_int(a):
 def oppose(a):
     not_a = Not(a)
     return n_adder(not_a, Un)
+
+def sll(a, n):
+    feur = Constant("0"*n)
+    feur2 = Concat(a, feur)
+    overflow = Constant("0")
+    if Slice(0, n, feur2) != feur:
+        overlow = Constant("1")
+    return , Slice(n, feur2.bus_size, feur2)
