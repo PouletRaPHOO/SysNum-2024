@@ -76,8 +76,7 @@ def main():
 
     result,of,zf,sf =  Alu(is_ari,is_bool,is_cmp,unary,additional_code, treated_arg1, treated_arg2)
 
-
-
+    #Constant("0"*32),Constant("1"),Constant("1"),Constant("1")
 
     iswritingneeded = or4(is_ari, is_bool, unary, Or(is_mov, And(is_mem,c1)))
 
@@ -126,6 +125,5 @@ def main():
     ))
 
     p_temp = Mux(is_really_jumping, n_p, arg2 )
-
 
 main()
