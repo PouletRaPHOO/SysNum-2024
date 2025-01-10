@@ -1,2 +1,14 @@
 ### Starting build.
+# Target: netlist_simulator.ml.depends, tags: { debug, extension:ml, file:netlist_simulator.ml, ocaml, ocamldep, quiet, traverse, use_menhir }
+/home/pouletraphoo/.opam/default/bin/ocamldep.opt -modules netlist_simulator.ml > netlist_simulator.ml.depends
++ /home/pouletraphoo/.opam/default/bin/ocamldep.opt -modules netlist_simulator.ml > netlist_simulator.ml.depends
+File "netlist_simulator.ml", line 22, characters 0-9:
+22 | exception MauvaiseEntree
+     ^^^^^^^^^
+Error: Syntax error: ')' expected
+File "netlist_simulator.ml", line 20, characters 16-17:
+20 |   Array.for_all (funprint_string "salut les reufs \n"
+                     ^
+  This '(' might be unmatched
+Command exited with code 2.
 # Compilation unsuccessful.

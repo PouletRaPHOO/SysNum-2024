@@ -17,7 +17,21 @@ let int_of_array v =
 let explode_string s = List.init (String.length s) (String.get s)
 
 let istrue a =
-  Array.for_all (funprint_string "salut les reufs \n"
+  Array.for_all (fun x-> x) a
+
+let andb a b = a && b
+let orb a b = a || b
+let nandb a b = not (a&&b)
+let xorb a b =
+    (a || b) && not (a && b)
+
+let notb cons = match cons with
+  | VBit b ->VBit(not b)
+  | VBitArray a -> VBitArray (Array.map not a)
+
+let getval env a = match a with
+  | Aconst cons -> cons
+  | Avar i -> Env.find i env
 (*------------------------------Fonctions d'input----------------------------*)
 exception MauvaiseEntree
 let read_bit ident =
