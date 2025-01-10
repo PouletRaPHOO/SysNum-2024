@@ -17,7 +17,21 @@ let int_of_array v =
 let explode_string s = List.init (String.length s) (String.get s)
 
 let istrue a =
-  Array.for_all (funprint_string "salut les reufs \n"
+  Array.for_all (fun x-> x) a
+
+let andb a b = a && b
+let orb a b = a || b
+let nandb a b = not (a&&b)
+let xorb a b =
+    (a || b) && not (a && b)
+
+let notb cons = match cons with
+  | VBit b ->VBit(not b)
+  | VBitArray a -> VBitArray (Array.map not a)
+
+let getval env a = match a with
+  | Aconst cons -> cons
+  | Avar i -> Env.find i env
 (*------------------------------Fonctions d'input----------------------------*)
 exception MauvaiseEntree
 let read_bit ident =
@@ -210,14 +224,11 @@ let init v = match v with
 | TBitArray n-> VBitArray (Array.make n false)
 
 let simulator program number_steps =
-  print_string "coucou"
   let i = ref 0 in
   let e = ref (Env.map (fun v -> init v) program.p_vars) in
-  print_string "avant appel prepass"
   let (rams,roms,li)  =  List.fold_left (fun acc (i,op) -> prepass acc i op)
       (Env.empty,Env.empty, []) program.p_eqs in
   
-  print_string "avant while"
 
   while not (!i = number_steps) do
     Printf.printf "Etape n°%d\n" (!i+1);
@@ -248,7 +259,6 @@ let simulator program number_steps =
 
 
 let compile filename =
-  print_string "ouais"
   try
     let p = Netlist.read_file filename in
     begin try
@@ -262,7 +272,6 @@ let compile filename =
     | Netlist.Parse_error s -> Format.eprintf "An error accurred: %s@." s; exit 2
 
 let main () =
-  Printf.printf "aaaa%!"
   Arg.parse
     ["-n", Arg.Set_int number_steps, "Number of steps to simulate"]
     compile

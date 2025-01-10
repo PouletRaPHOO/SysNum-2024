@@ -224,14 +224,11 @@ let init v = match v with
 | TBitArray n-> VBitArray (Array.make n false)
 
 let simulator program number_steps =
-  print_string "coucou"
   let i = ref 0 in
   let e = ref (Env.map (fun v -> init v) program.p_vars) in
-  print_string "avant appel prepass"
   let (rams,roms,li)  =  List.fold_left (fun acc (i,op) -> prepass acc i op)
       (Env.empty,Env.empty, []) program.p_eqs in
   
-  print_string "avant while"
 
   while not (!i = number_steps) do
     Printf.printf "Etape n°%d\n" (!i+1);
@@ -262,7 +259,6 @@ let simulator program number_steps =
 
 
 let compile filename =
-  print_string "ouais"
   try
     let p = Netlist.read_file filename in
     begin try
@@ -276,7 +272,6 @@ let compile filename =
     | Netlist.Parse_error s -> Format.eprintf "An error accurred: %s@." s; exit 2
 
 let main () =
-  Printf.printf "aaaa%!"
   Arg.parse
     ["-n", Arg.Set_int number_steps, "Number of steps to simulate"]
     compile
