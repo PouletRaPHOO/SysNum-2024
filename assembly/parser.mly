@@ -18,6 +18,7 @@
 %token JMP JNE JGE
 %token LOAD STORE
 %token EOF
+%token LINEFEED
 
 
 /* Priorités et associativités des tokens */
@@ -33,11 +34,35 @@
 
 /* Règles de grammaire */
 
-prog:main = decla* EOF {main}
-
-decla: d=expr SEMICOLON {{name = "aaa"; body = {params = []; result = None; body =d}}}
+prog:main = expr* EOF {main}
 
 expr:
-    | i = IDENT {Eident i }
-    | e1 = expr PLUS e2=expr {Ebinop (Add, e1, e2)}
-    | i = CST {Eint i}
+      | d=exp SEMICOLON {Bexpr(d)}
+      | LINEFEED {Linefeed}
+      | l = LABEL {Label l}
+
+exp:
+    | b=binop i1 = REG i2 = REG {Ebinop(b,i1,i2)}
+    | u=unop i1= REG {Eunop(u,i1)}
+    | MOV i1 = REG i2 = REG {Emov(i1,i2)}
+    | MOV i1 = REG i2= CST {Emovi (i1,i2)}
+    | MOV i1 = REG i=VAR {Eload{i1,i}}
+    | MOV i1 = VAR i2 = REG {Estore(i1,i2)}
+    | j=jump i = VAR {Ejump(j,i)}
+    | CMP i1 = REG i2 = REG {Ecmp(i1,i2)}
+
+%inline jump =
+    | JMP {Jmp}
+    | JE {Je}
+    | JNE {Jne}
+    | JGE {Jge}
+
+%inline binop =
+      | ADD {Add}
+      | SUB {Sub}
+      | MUL {Mul}
+
+%inline unop =
+        | SLL {Sll}
+        | SRL  {Srl}
+        | NOT {Not}
