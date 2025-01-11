@@ -59,7 +59,7 @@ def main():
 
     treated_arg1 = Mux(x0,REG0,Mux(x1,REG1,Mux(x2,REG2,Mux(x3,REG3,Mux(x4,REG4,Mux(x5,REG5,Mux(x6,REG6,Mux(x7,REG7,Mux(x8,REG8,Mux(x9,REG9,Mux(x10,REG10,Mux(x11,REG11,Mux(x12,REG12,Mux(x13,REG13,Mux(x14,REG14,REG15)))))))))))))))
     #Enfer sur terre (le 1)
-    treated_arg2 = Mux(y0,Mux(y1,Mux(y2,Mux(y3,Mux(y4,Mux(y5,Mux(y6,Mux(y7,Mux(y8,Mux(y9,Mux(y10,Mux(y11,Mux(y12,Mux(y13,Mux(y14,REG15,REG14),REG13),REG12),REG11),REG10),REG9),REG8),REG7),REG6),REG5),REG4),REG3),REG2),REG1),REG0)
+    treated_arg2 = Mux(y0,REG0,Mux(y1,REG1,Mux(y2,REG2,Mux(y3,REG3,Mux(y4,REG4,Mux(y5,REG5,Mux(y6,REG6,Mux(y7,REG7,Mux(y8,REG8,Mux(y9,REG9,Mux(y10,REG10,Mux(y11,REG11,Mux(y12,REG12,Mux(y13,REG13,Mux(y14,REG14,REG15)))))))))))))))
     #Enfer sur terre (le 2)
 
 
@@ -112,9 +112,9 @@ def main():
 
     #Enfer sur terre (le 3)
 
-    zf_temp = Mux(And(isflagwritingneeded,x15), ZF, zf )
-    sf_temp = Mux(And(isflagwritingneeded,x15), SF, sf )
-    of_temp = Mux(And(isflagwritingneeded,x15), OF, of )
+    zf_temp = Mux(And(isflagwritingneeded,x15), zf, ZF )
+    sf_temp = Mux(And(isflagwritingneeded,x15), sf, SF )
+    of_temp = Mux(And(isflagwritingneeded,x15), of, OF )
 
     is_really_jumping = And(is_jump, or4(
         c1, #jmp
