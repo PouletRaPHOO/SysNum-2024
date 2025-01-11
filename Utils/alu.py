@@ -7,7 +7,11 @@ def Alu(is_ari, is_bool, is_cmp, unary, add_code, arg1, arg2):
     s_mul, c_mul = Constant("0"*32), Constant("0")
     temp_mul, ctemp_mul = Constant("0"*32), Constant("0")
     for i in range(32):
-        pass
+        ctemp_mul, temp_mul = sll(arg2, i)
+        c_mul = Or(c_mul, ctemp_mul)
+        sadd_mul, ctempadd_mul = n_adder(s_mul, temp_mul)
+        s_mul, ctemp_mul = Mux(arg1[i], sadd_mul, s_mul), Mux(arg1[i], ctempadd_mul, ctemp_mul)
+        c_mul = Or(c_mul, ctemp_mul)
     
     r_and = And(arg1, arg2)
     of_and = Constant("0")
