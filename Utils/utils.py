@@ -33,10 +33,10 @@ def full_adder(a, b, c):
 def n_adder(a, b):
     assert(a.bus_size == b.bus_size)
     c = Constant("0")
-    (s, c) = full_adder(a[0], b[0], c) # Treat the 0 case separately since variables have a bus size >= 1
-    for i in range(1, a.bus_size):
-        (s_i, c) = full_adder(a[i], b[i], c)
-        s = s + s_i
+    (s, c) = full_adder(a[a.bus_size - 1], b[a.bus_size - 1], c) # Treat the 0 case separately since variables have a bus size >= 1
+    for i in range(2, a.bus_size + 1):
+        (s_i, c) = full_adder(a[a.bus_size - i], b[a.bus_size - i], c)
+        s = s_i + s
     return (s, c)
 
 def is_zero(a):
@@ -64,8 +64,8 @@ def sll(a, n):
     return (overflow, Slice(n, feur2.bus_size, feur2))
 
 def srl(a, n):
-    if int(a[0]):
-        feur2 = Concat(Constant("0"*n), a)
+    if a[0] == "1":
+        feur2 = Concat(Constant("1"*n), a)
     else:
-        feur2 = Concat(Constant("1"*n, a))
-    return Slice(n, feur2.bus_size, feur2)
+        feur2 = Concat(Constant("0"*n), a)
+    return Slice(0, feur2.bus_size - n, feur2)

@@ -17,4 +17,7 @@ netlist_:
 
 exec:
 	./netlist_simulator.byte test.net
+
+net_test:
+	./netlist_simulator.byte -n 5 main.net
 # end
