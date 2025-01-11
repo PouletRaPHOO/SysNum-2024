@@ -203,9 +203,7 @@ let prepass acc i (op:exp) =
       let fich = open_in (prep_name_file i) in
       for i = 0 to (1 lsl addr_size) -1 do
         let line = input_line fich in
-        print_string line;
         if String.length line = word_size then begin
-          print_string "je suis là";
           emptyarr.(i) <- Array.of_list (List.map (fun x ->
             match x with
             | '0'-> false

@@ -82,7 +82,7 @@ def main():
 
     iswritingneeded = Or(or4(is_ari, is_bool, unary, Or(is_mov, And(is_mem,c1))), is_movi)
 
-    isflagwritingneeded = or4(is_ari, is_bool, unary, Or(is_cmp, Or(is_mov, And(is_mem,c1))))
+    isflagwritingneeded = or4(is_ari, is_bool, unary, Or(is_cmp, Or(is_mov, And(is_mem,c1)))) #TODO probablement problème ici
 
     is_load_needed = is_mem & c2
 
@@ -124,29 +124,37 @@ def main():
     ))
 
     p_temp = Mux(is_really_jumping, Slice( 16,32, arg2), n_p)
+    
+    res_al,asdfkije,sdljisfljk,einene = Alu(Constant("0"), Constant("0"), Constant("0"), Constant("1"), Constant("00110001"), Constant("0000000000000000000000000000001"), Constant("0000000000000000000000000000001"))
+    
+    to_sll = Constant("0001")
+    slled = srl(to_sll, 1)
 
-    arg1_raw.set_as_output("arg1_raw")
-    is_movi.set_as_output("is_movi")
-    arg2_raw.set_as_output("arg2_raw")
-    arg2.set_as_output("arg2")
-    actual_op.set_as_output("actual_op")
-    # n_p.set_as_output("n_p")
-    # P.set_as_output("P")
-    p_temp.set_as_output("p_temp")
-    reg0_temp.set_as_output("regi0")
-    reg1_temp.set_as_output("regi1")
-    reg2_temp.set_as_output("regi2")
-    reg3_temp.set_as_output("regi3")
-    reg4_temp.set_as_output("regi4")
-    reg5_temp.set_as_output("regi5")
-    reg6_temp.set_as_output("regi6")
-    reg7_temp.set_as_output("regi7")
-    reg8_temp.set_as_output("regi8")
-    reg9_temp.set_as_output("regi9")
-    reg10_temp.set_as_output("regi10")
-    reg11_temp.set_as_output("regi11")
-    reg12_temp.set_as_output("regi12")
-    reg13_temp.set_as_output("regi13")
-    reg14_temp.set_as_output("regi14")
-    reg15_temp.set_as_output("regi15")
+    slled.set_as_output("sll")
+
+    res_al.set_as_output("res_al")
+    # arg1_raw.set_as_output("arg1_raw")
+    # is_movi.set_as_output("is_movi")
+    # arg2_raw.set_as_output("arg2_raw")
+    # arg2.set_as_output("arg2")
+    # actual_op.set_as_output("actual_op")
+    # # n_p.set_as_output("n_p")
+    # # P.set_as_output("P")
+    # p_temp.set_as_output("p_temp")
+    # reg0_temp.set_as_output("regi0")
+    # reg1_temp.set_as_output("regi1")
+    # reg2_temp.set_as_output("regi2")
+    # reg3_temp.set_as_output("regi3")
+    # reg4_temp.set_as_output("regi4")
+    # reg5_temp.set_as_output("regi5")
+    # reg6_temp.set_as_output("regi6")
+    # reg7_temp.set_as_output("regi7")
+    # reg8_temp.set_as_output("regi8")
+    # reg9_temp.set_as_output("regi9")
+    # reg10_temp.set_as_output("regi10")
+    # reg11_temp.set_as_output("regi11")
+    # reg12_temp.set_as_output("regi12")
+    # reg13_temp.set_as_output("regi13")
+    # reg14_temp.set_as_output("regi14")
+    # reg15_temp.set_as_output("regi15")
 

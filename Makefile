@@ -19,8 +19,5 @@ exec:
 	./netlist_simulator.byte test.net
 
 net_test:
-	ocamlbuild netlist/netlist_simulator.byte
-	rm -f main.net
-	python3 carotte.py/carotte.py main.py > main.net
 	./netlist_simulator.byte -n 5 main.net
 # end
