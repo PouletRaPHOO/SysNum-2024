@@ -203,19 +203,22 @@ let prepass acc i (op:exp) =
       let fich = open_in (prep_name_file i) in
       for i = 0 to (1 lsl addr_size) -1 do
         let line = input_line fich in
-        if String.length line = word_size then emptyarr.(i) <- Array.of_list (List.map (fun x ->
+        print_string line;
+        if String.length line = word_size then begin
+          print_string "je suis là";
+          emptyarr.(i) <- Array.of_list (List.map (fun x ->
             match x with
             | '0'-> false
             | '1' -> true
             | _ -> raise BadInput
-          ) (explode_string line) )else raise BadLength
+          ) (explode_string line) ) end else raise BadLength
       done;
       (rams,Env.add i (emptyarr) roms,li)
 
     with
     | BadLength -> failwith "Mauvaise taille de fichier"
     | BadInput -> failwith "Mauvaise entrée"
-    | _ -> (rams,Env.add i (emptyarr) roms,li) )
+    | e ->  Printf.printf "%s" (Printexc.to_string e);(rams,Env.add i (emptyarr) roms,li) )
 
   | _ -> (rams,roms,li)
 
