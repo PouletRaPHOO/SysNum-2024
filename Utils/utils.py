@@ -41,7 +41,7 @@ def n_adder(a, b):
 
 def is_zero(a):
     zf = Constant("0")
-    for i in range(a.bus_size)
+    for i in range(a.bus_size):
         zf = zf | a[i]
     return Not(zf)
 
@@ -54,13 +54,15 @@ def bin_to_int(a):
     
 def oppose(a):
     not_a = Not(a)
-    return n_adder(not_a, Un)
+    s,_ = n_adder(not_a, Constant(Un))
+    return s
 
 def sll(a, n):
     c = Constant("0")
     for i in range(n):
         a, ctemp = n_adder(a, a)
         c = c | ctemp
+    return (c, a)
 
 def srl(a, n):
     return Slice(0, a.bus_size, Mux(a[0], Concat(Constant("1"*n), a), Concat(Constant("0"*n), a)))

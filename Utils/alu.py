@@ -15,18 +15,18 @@ def Alu(is_ari, is_bool, is_cmp, unary, add_code, arg1, arg2):
     
     r_and = And(arg1, arg2)
     of_and = Constant("0")
-    zf_and = Mux(r_and, Constant("0"), Constant("1"))
+    zf_and = is_zero(r_and)
     sf_and = r_and[0]
     
     r_or = Or(arg1, arg2)
     of_or = Constant("0")
-    zf_or = Mux(is_zero(r_or), Constant("0"), Constant("1"))
+    zf_or = is_zero(r_or)
     sf_or = r_or[0]
 
 
     r_xor = Xor(arg1, arg2)
     of_xor = Constant("0")
-    zf_xor = Mux(is_zero(r_xor), Constant("0"), Constant("1"))
+    zf_xor = is_zero(r_xor)
     sf_or = r_xor[0]
 
     s_cmp, c_cmp = n_adder(arg1, oppose(arg2))
