@@ -63,8 +63,4 @@ def sll(a, n):
         c = c | ctemp
 
 def srl(a, n):
-    if a[0] == "1":
-        feur2 = Concat(Constant("1"*n), a)
-    else:
-        feur2 = Concat(Constant("0"*n), a)
-    return Slice(0, feur2.bus_size - n, feur2)
+    return Slice(0, a.bus_size, Mux(a[0], Concat(Constant("1"*n), a), Concat(Constant("0"*n), a)))
