@@ -68,7 +68,7 @@ def main():
     
 
 
-    arg2 = Mux(Or(is_jump,is_movi),treated_arg2, Concat(Constant("000000000000"), arg2_raw)) #TODO mieux faire ça (il faut ptet concat des 1 et mettre un constant)
+    arg2 = Mux(Or(is_jump,is_movi), Concat(Constant("000000000000"), arg2_raw),treated_arg2) #TODO mieux faire ça (il faut ptet concat des 1 et mettre un constant)
 
     (n_p, euuuhhh)  = n_adder(P, Constant(Un))
 
@@ -80,7 +80,7 @@ def main():
 
     #Constant("0"*32),Constant("1"),Constant("1"),Constant("1")
 
-    iswritingneeded = or4(is_ari, is_bool, unary, Or(is_mov, And(is_mem,c1)))
+    iswritingneeded = Or(or4(is_ari, is_bool, unary, Or(is_mov, And(is_mem,c1))), is_movi)
 
     isflagwritingneeded = or4(is_ari, is_bool, unary, Or(is_cmp, Or(is_mov, And(is_mem,c1))))
 
@@ -125,6 +125,8 @@ def main():
 
     p_temp = Mux(is_really_jumping, Slice( 16,32, arg2), n_p)
 
+    arg1_raw.set_as_output("arg1_raw")
+    is_movi.set_as_output("is_movi")
     arg2_raw.set_as_output("arg2_raw")
     arg2.set_as_output("arg2")
     actual_op.set_as_output("actual_op")
