@@ -5,9 +5,9 @@ def Alu(is_ari, is_bool, is_cmp, unary, add_code, arg1, arg2):
     s_add, c_add = n_adder(arg1, arg2)
     s_sub, c_sub = n_adder(arg1, arg2)
     s_mul, c_mul = Constant("0"*32), Constant("0")
-    temp_mul, ctemp_mul = Constant("0"*32), Constant("0")
+    temp_mul, ctemp_mul = arg2, Constant("0")
     for i in range(32):
-        ctemp_mul, temp_mul = sll(arg2, i)
+        ctemp_mul, temp_mul = sll(temp_mul, 1)
         c_mul = Or(c_mul, ctemp_mul)
         sadd_mul, ctempadd_mul = n_adder(s_mul, temp_mul)
         s_mul, ctemp_mul = Mux(arg1[i], sadd_mul, s_mul), Mux(arg1[i], ctempadd_mul, ctemp_mul)
