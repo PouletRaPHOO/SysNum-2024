@@ -1,0 +1,32 @@
+type token =
+    XOR
+  | VAR of string
+  | SUB
+  | SRL
+  | SLL
+  | SEMICOLON
+  | REG of int
+  | OR
+  | NOT
+  | MUL
+  | MOV
+  | LINEFEED
+  | LABEL of string
+  | JNE
+  | JMP
+  | JGE
+  | JE
+  | EOF
+  | CST of int
+  | CMP
+  | AND
+  | ADD
+val menhir_begin_marker : int
+val xv_unop : Ast.unop
+val xv_prog : Ast.program
+val xv_list_expr_ : Ast.program
+val xv_jump : Ast.jump
+val xv_expr : Ast.expr
+val xv_exp : Ast.bexpr
+val xv_binop : Ast.binop
+val menhir_end_marker : int

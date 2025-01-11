@@ -1,0 +1,66 @@
+# dune build
+# OCAMLPARAM: unset
+# Shared cache: disabled
+# Shared cache location: /home/pouletraphoo/.cache/dune/db
+# Workspace root: /home/pouletraphoo/Cours/ENS/Info/Sysnum/SysNum-2024/assembly
+# Auto-detected concurrency: 4
+# Dune context:
+#  { name = "default"
+#  ; kind = "default"
+#  ; profile = Dev
+#  ; merlin = true
+#  ; fdo_target_exe = None
+#  ; build_dir = In_build_dir "default"
+#  ; installed_env =
+#      map
+#        { "INSIDE_DUNE" :
+#            "/home/pouletraphoo/Cours/ENS/Info/Sysnum/SysNum-2024/assembly/_build/default"
+#        ; "OCAML_COLOR" : "always"
+#        ; "OPAMCOLOR" : "always"
+#        }
+#  ; instrument_with = []
+#  }
+$ /home/pouletraphoo/.opam/default/bin/ocamlc.opt -config > /tmp/dune_4f885c_output
+$ (cd _build/default && /home/pouletraphoo/.opam/default/bin/ocamldep.opt -modules -impl lovni.ml) > _build/default/.lovni.eobjs/lovni.impl.d
+$ (cd _build/default && /home/pouletraphoo/.opam/default/bin/ocamlc.opt -g -bin-annot -I .lovni.eobjs/byte -I /home/pouletraphoo/.opam/default/lib/graphics -no-alias-deps -opaque -o .lovni.eobjs/byte/lovni.cmo -c -impl lovni.ml)
+> File "lovni.ml", line 77, characters 8-17:
+> 77 |     let env_label,env_var, p2 = premier_passage 0 0 0 (Env.empty) (Env.empty) p in
+>              ^^^^^^^^^
+> Warning 26 [unused-var]: unused variable env_label.
+>
+> File "lovni.ml", line 77, characters 18-25:
+> 77 |     let env_label,env_var, p2 = premier_passage 0 0 0 (Env.empty) (Env.empty) p in
+>                        ^^^^^^^
+> Warning 26 [unused-var]: unused variable env_var.
+>
+> File "lovni.ml", line 77, characters 27-29:
+> 77 |     let env_label,env_var, p2 = premier_passage 0 0 0 (Env.empty) (Env.empty) p in
+>                                 ^^
+> Warning 26 [unused-var]: unused variable p2.
+>
+> File "lovni.ml", line 81, characters 12-20:
+> 81 |     let rec passage2 p = match p with
+>                  ^^^^^^^^
+> Warning 26 [unused-var]: unused variable passage2.
+$ (cd _build/default && /home/pouletraphoo/.opam/default/bin/ocamlopt.opt -g -I .lovni.eobjs/byte -I .lovni.eobjs/native -I /home/pouletraphoo/.opam/default/lib/graphics -intf-suffix .ml -no-alias-deps -opaque -o .lovni.eobjs/native/lovni.cmx -c -impl lovni.ml)
+> File "lovni.ml", line 77, characters 8-17:
+> 77 |     let env_label,env_var, p2 = premier_passage 0 0 0 (Env.empty) (Env.empty) p in
+>              ^^^^^^^^^
+> Warning 26 [unused-var]: unused variable env_label.
+>
+> File "lovni.ml", line 77, characters 18-25:
+> 77 |     let env_label,env_var, p2 = premier_passage 0 0 0 (Env.empty) (Env.empty) p in
+>                        ^^^^^^^
+> Warning 26 [unused-var]: unused variable env_var.
+>
+> File "lovni.ml", line 77, characters 27-29:
+> 77 |     let env_label,env_var, p2 = premier_passage 0 0 0 (Env.empty) (Env.empty) p in
+>                                 ^^
+> Warning 26 [unused-var]: unused variable p2.
+>
+> File "lovni.ml", line 81, characters 12-20:
+> 81 |     let rec passage2 p = match p with
+>                  ^^^^^^^^
+> Warning 26 [unused-var]: unused variable passage2.
+$ (cd _build/default && /home/pouletraphoo/.opam/default/bin/ocamlopt.opt -g -o lovni.exe /home/pouletraphoo/.opam/default/lib/graphics/graphics.cmxa -I /home/pouletraphoo/.opam/default/lib/graphics .lovni.eobjs/native/ast.cmx .lovni.eobjs/native/parser.cmx .lovni.eobjs/native/lexer.cmx .lovni.eobjs/native/lovni.cmx)
+# Promoting "_build/default/lovni.exe" to "lovni.exe"
