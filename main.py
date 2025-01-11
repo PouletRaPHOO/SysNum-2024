@@ -125,4 +125,21 @@ def main():
 
     p_temp = Mux(is_really_jumping, n_p, Slice( 16,32, arg2) )
 
-main()
+
+    REG0.set_as_output("regi0")
+    REG1.set_as_output("regi1")
+    REG2.set_as_output("regi2")
+    REG3.set_as_output("regi3")
+    REG4.set_as_output("regi4")
+    REG5.set_as_output("regi5")
+    REG6.set_as_output("regi6")
+    REG7.set_as_output("regi7")
+    REG8.set_as_output("regi8")
+    REG9.set_as_output("regi9")
+    REG10.set_as_output("regi10")
+    REG11.set_as_output("regi11")
+    REG12.set_as_output("regi12")
+    REG13.set_as_output("regi13")
+    REG14.set_as_output("regi14")
+    REG15.set_as_output("regi15")
+
