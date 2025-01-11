@@ -107,10 +107,21 @@ let () =
     let rec passage2 p = match p with
       | [] -> ()
       | Bexpr(exp)::q -> Printf.fprint f oc "%s\n" (match exp with
-          | Noop -> "00000000000000000000000000000000"
+          | Noop ->
+            "00000000000000000000000000000000"
           | Ebinop(b,i1,i2) -> (find_binop_type b)^(find_binop_code b)^(int_to_binary 4 i1)^(int_to_binary 20 i2)
-
-
+          | Eunop(u,i1) ->
+            "0011"^(find_unop_code u)^(int_to_binary 4 i1)^"00000000000000000000"
+          | Emovi(i1,i2) ->
+            "01110001"^(int_to_binary 4 i1)^(int_to_binary 20 i2)
+          | Emov(i1,i2) ->
+            "01100001"^(int_to_binary 4 i1)^(int_to_binary 20 i2)
+          | Ecmp(i1,i2) ->
+            "10000001"^(int_to_binary 4 i1)^(int_to_binary 20 i2)
+          | Ejump(j,i) -> let line = Env.find i env_label in
+            "0100"^(find_jump_code j)^(int_to_binary 20 line)
+          |Eloadfin(i1,i2) ->
+            "0101"^(int_to_binary)
 
           | _ -> assert false
 
