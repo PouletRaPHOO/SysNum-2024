@@ -4,10 +4,9 @@ from lib_carotte import *
 from Utils.utils import *
 from Utils.alu import *
 
-from examples.nadder import *
 
 
-Un = "00000000000000000000000000000001"
+Un = "0000000000000001"
 
 allow_ribbon_logic_operations(True)
 
@@ -39,8 +38,8 @@ def main():
 
 
 
-    P = Reg(Defer(32, lambda: p_temp))
-    actual_op = ROM(32,32,P) #Code complet de l'opération appelée
+    P = Reg(Defer(16, lambda: p_temp))
+    actual_op = ROM(16,32,P) #Code complet de l'opération appelée
     op_code = Slice(0,8, actual_op) #Code d'identificateur de l'opération
 
     id_code = Slice(0,4, op_code)
@@ -71,7 +70,7 @@ def main():
 
     arg2 = Mux(Or(is_jump,is_movi),treated_arg2, Concat(Constant("000000000000"), arg2_raw)) #TODO mieux faire ça (il faut ptet concat des 1 et mettre un constant)
 
-    (n_p, euuuhhh)  = adder(P, Constant(Un), Constant("0"))
+    (n_p, euuuhhh)  = n_adder(P, Constant(Un))
 
 
     c,c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15 = mux4(additional_code)
@@ -124,6 +123,6 @@ def main():
         And(c4, Xor(SF,OF)) #TODO ATTENTION c'est très possible que ça fasse pas ce qu'on veuille
     ))
 
-    p_temp = Mux(is_really_jumping, n_p, arg2 )
+    p_temp = Mux(is_really_jumping, n_p, Slice( 16,32, arg2) )
 
 main()
