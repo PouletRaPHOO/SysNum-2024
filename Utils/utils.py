@@ -57,12 +57,10 @@ def oppose(a):
     return n_adder(not_a, Un)
 
 def sll(a, n):
-    feur = Constant("0"*n)
-    feur2 = Concat(a, feur)
-    overflow = Constant("0")
-    if Slice(0, n, feur2) != feur:
-        overlow = Constant("1")
-    return (overflow, Slice(n, feur2.bus_size, feur2))
+    c = Constant("0")
+    for i in range(n):
+        a, ctemp = n_adder(a, a)
+        c = c | ctemp
 
 def srl(a, n):
     if a[0] == "1":
