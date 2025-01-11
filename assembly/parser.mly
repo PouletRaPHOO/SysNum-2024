@@ -18,7 +18,7 @@
 %token JE JMP JNE JGE
 %token EOF
 %token LINEFEED
-
+%token NOOP
 
 /* Priorités et associativités des tokens */
 
@@ -49,7 +49,7 @@ exp:
     | MOV i1 = VAR i2 = REG {Estore(i1,i2)}
     | j=jump i = VAR {Ejump(j,i)}
     | CMP i1 = REG i2 = REG {Ecmp(i1,i2)}
-
+    | NOOP {Enoop}
 %inline jump:
     | JMP {Jmp}
     | JE {Je}
