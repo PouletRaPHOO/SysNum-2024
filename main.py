@@ -4,10 +4,9 @@ from lib_carotte import *
 from Utils.utils import *
 from Utils.alu import *
 
-from examples.nadder import *
 
 
-Un = "00000000000000000000000000000001"
+Un = "0000000000000001"
 
 allow_ribbon_logic_operations(True)
 
@@ -39,8 +38,8 @@ def main():
 
 
 
-    P = Reg(Defer(32, lambda: p_temp))
-    actual_op = ROM(32,32,P) #Code complet de l'opération appelée
+    P = Reg(Defer(16, lambda: p_temp))
+    actual_op = ROM(16,32,P) #Code complet de l'opération appelée
     op_code = Slice(0,8, actual_op) #Code d'identificateur de l'opération
 
     id_code = Slice(0,4, op_code)
@@ -58,29 +57,32 @@ def main():
 
 
 
-    treated_arg1 = Mux(x0,Mux(x1,Mux(x2,Mux(x3,Mux(x4,Mux(x5,Mux(x6,Mux(x7,Mux(x8,Mux(x9,Mux(x10,Mux(x11,Mux(x12,Mux(x13,Mux(x14,REG15,REG14),REG13),REG12),REG11),REG10),REG9),REG8),REG7),REG6),REG5),REG4),REG3),REG2),REG1),REG0)
+    treated_arg1 = Mux(x0,REG0,Mux(x1,REG1,Mux(x2,REG2,Mux(x3,REG3,Mux(x4,REG4,Mux(x5,REG5,Mux(x6,REG6,Mux(x7,REG7,Mux(x8,REG8,Mux(x9,REG9,Mux(x10,REG10,Mux(x11,REG11,Mux(x12,REG12,Mux(x13,REG13,Mux(x14,REG14,REG15)))))))))))))))
     #Enfer sur terre (le 1)
-    treated_arg2 = Mux(y0,Mux(y1,Mux(y2,Mux(y3,Mux(y4,Mux(y5,Mux(y6,Mux(y7,Mux(y8,Mux(y9,Mux(y10,Mux(y11,Mux(y12,Mux(y13,Mux(y14,REG15,REG14),REG13),REG12),REG11),REG10),REG9),REG8),REG7),REG6),REG5),REG4),REG3),REG2),REG1),REG0)
+    treated_arg2 = Mux(y0,REG0,Mux(y1,REG1,Mux(y2,REG2,Mux(y3,REG3,Mux(y4,REG4,Mux(y5,REG5,Mux(y6,REG6,Mux(y7,REG7,Mux(y8,REG8,Mux(y9,REG9,Mux(y10,REG10,Mux(y11,REG11,Mux(y12,REG12,Mux(y13,REG13,Mux(y14,REG14,REG15)))))))))))))))
     #Enfer sur terre (le 2)
 
 
 
-    is_noop,is_ari, is_bool, unary, is_jump, is_mem, is_mov, is_movi,is_cmp,_,_,_,_,_,_,_ = mux4(id_code)
+    is_noop,is_ari, is_bool, unary, is_jump, is_mem, is_mov, is_movi,is_cmp,a,b,c,d,e,f,g = mux4(id_code)
     
-    arg2 = Mux(Or(is_jump,is_movi),treated_arg2, Concat(Constant("000000000000"), arg2_raw)) #TODO mieux faire ça (il faut ptet concat des 1 et mettre un constant)
-
-    (n_p, _)  = adder(P, Constant(Un), Constant("0"))
-
-    _,c1,c2,c3,c4,_,_,_,_,_,_,_,_,_,_,_ = mux4(additional_code)
 
 
-    result,of,zf,sf =  Alu(is_ari,is_bool,is_cmp,unary,additional_code, treated_arg1, treated_arg2)
+    arg2 = Mux(Or(is_jump,is_movi), Concat(Constant("000000000000"), arg2_raw),treated_arg2) #TODO mieux faire ça (il faut ptet concat des 1 et mettre un constant)
+
+    (n_p, euuuhhh)  = n_adder(P, Constant(Un))
+
+
+    c,c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15 = mux4(additional_code)
+
+
+    result,of,zf,sf = Alu(is_ari,is_bool,is_cmp,unary,additional_code, treated_arg1, treated_arg2)
 
     #Constant("0"*32),Constant("1"),Constant("1"),Constant("1")
 
-    iswritingneeded = or4(is_ari, is_bool, unary, Or(is_mov, And(is_mem,c1)))
+    iswritingneeded = Or(or4(is_ari, is_bool, unary, Or(is_mov, And(is_mem,c1))), is_movi)
 
-    isflagwritingneeded = or4(is_ari, is_bool, unary, Or(is_cmp, Or(is_mov, And(is_mem,c1))))
+    isflagwritingneeded = or4(is_ari, is_bool, unary, Or(is_cmp, Or(is_mov, And(is_mem,c1)))) #TODO probablement problème ici
 
     is_load_needed = is_mem & c2
 
@@ -89,33 +91,30 @@ def main():
 
     raminho = RAM(16,32,arg2_ram,is_load_needed,arg1_ram,treated_arg2)
 
-    finalresult = Mux(is_mem,Mux(is_mov, Mux(is_movi,result,arg2), treated_arg2),raminho)
+    finalresult = Mux(is_mem,raminho, Mux(is_mov, treated_arg2, Mux(is_movi,arg2, result)))
 
-    reg0_temp = Mux(And(iswritingneeded,x0), REG0, result )
-    reg1_temp = Mux(And(iswritingneeded,x1), REG1, result )
-    reg2_temp = Mux(And(iswritingneeded,x2), REG2, result )
-    reg3_temp = Mux(And(iswritingneeded,x3), REG3, result )
-    reg4_temp = Mux(And(iswritingneeded,x4), REG4, result )
-    reg5_temp = Mux(And(iswritingneeded,x5), REG5, result )
-    reg6_temp = Mux(And(iswritingneeded,x6), REG6, result )
-    reg7_temp = Mux(And(iswritingneeded,x7), REG7, result )
-    reg8_temp = Mux(And(iswritingneeded,x8), REG8, result )
-    reg9_temp = Mux(And(iswritingneeded,x9), REG9, result )
-    reg10_temp = Mux(And(iswritingneeded,x10), REG10, result )
-    reg11_temp = Mux(And(iswritingneeded,x11), REG11, result )
-    reg12_temp = Mux(And(iswritingneeded,x12), REG12, result )
-    reg13_temp = Mux(And(iswritingneeded,x13), REG13, result )
-    reg14_temp = Mux(And(iswritingneeded,x14), REG14, result )
-    reg15_temp = Mux(And(iswritingneeded,x15), REG15, result )
+    reg0_temp = Mux(And(iswritingneeded,x0), finalresult, REG0 )
+    reg1_temp = Mux(And(iswritingneeded,x1), finalresult, REG1 )
+    reg2_temp = Mux(And(iswritingneeded,x2), finalresult, REG2 )
+    reg3_temp = Mux(And(iswritingneeded,x3), finalresult, REG3 )
+    reg4_temp = Mux(And(iswritingneeded,x4), finalresult, REG4 )
+    reg5_temp = Mux(And(iswritingneeded,x5), finalresult, REG5 )
+    reg6_temp = Mux(And(iswritingneeded,x6), finalresult, REG6 )
+    reg7_temp = Mux(And(iswritingneeded,x7), finalresult, REG7 )
+    reg8_temp = Mux(And(iswritingneeded,x8), finalresult, REG8 )
+    reg9_temp = Mux(And(iswritingneeded,x9), finalresult, REG9 )
+    reg10_temp = Mux(And(iswritingneeded,x10), finalresult, REG10 )
+    reg11_temp = Mux(And(iswritingneeded,x11), finalresult, REG11 )
+    reg12_temp = Mux(And(iswritingneeded,x12), finalresult, REG12 )
+    reg13_temp = Mux(And(iswritingneeded,x13), finalresult, REG13 )
+    reg14_temp = Mux(And(iswritingneeded,x14), finalresult, REG14 )
+    reg15_temp = Mux(And(iswritingneeded,x15), finalresult, REG15 )
 
     #Enfer sur terre (le 3)
 
-
-
-
-    zf_temp = Mux(And(isflagwritingneeded,x15), ZF, zf )
-    sf_temp = Mux(And(isflagwritingneeded,x15), SF, sf )
-    of_temp = Mux(And(isflagwritingneeded,x15), OF, of )
+    zf_temp = Mux(And(isflagwritingneeded,x15), zf, ZF )
+    sf_temp = Mux(And(isflagwritingneeded,x15), sf, SF )
+    of_temp = Mux(And(isflagwritingneeded,x15), of, OF )
 
     is_really_jumping = And(is_jump, or4(
         c1, #jmp
@@ -124,6 +123,40 @@ def main():
         And(c4, Xor(SF,OF)) #TODO ATTENTION c'est très possible que ça fasse pas ce qu'on veuille
     ))
 
-    p_temp = Mux(is_really_jumping, n_p, arg2 )
+    p_temp = Mux(is_really_jumping, Slice( 16,32, arg2), n_p)
+    
+    res_al,asdfkije,sdljisfljk,einene = Alu(Constant("0"), Constant("0"), Constant("0"), Constant("1"), Constant("00110001"), Constant("0000000000000000000000000000001"), Constant("0000000000000000000000000000001"))
+    
+    to_sll = Constant("0001")
+    slled = srl(to_sll, 1)
 
-main()
+    slled.set_as_output("sll")
+
+    res_al.set_as_output("res_al")
+    additional_code.set_as_output("add_code")
+    is_ari.set_as_output("is_ari")
+    # arg1_raw.set_as_output("arg1_raw")
+    # is_movi.set_as_output("is_movi")
+    # arg2_raw.set_as_output("arg2_raw")
+    # arg2.set_as_output("arg2")
+    # actual_op.set_as_output("actual_op")
+    # # n_p.set_as_output("n_p")
+    # # P.set_as_output("P")
+    # p_temp.set_as_output("p_temp")
+    reg0_temp.set_as_output("regi0")
+    reg1_temp.set_as_output("regi1")
+    reg2_temp.set_as_output("regi2")
+    reg3_temp.set_as_output("regi3")
+    reg4_temp.set_as_output("regi4")
+    # reg5_temp.set_as_output("regi5")
+    # reg6_temp.set_as_output("regi6")
+    # reg7_temp.set_as_output("regi7")
+    # reg8_temp.set_as_output("regi8")
+    # reg9_temp.set_as_output("regi9")
+    # reg10_temp.set_as_output("regi10")
+    # reg11_temp.set_as_output("regi11")
+    # reg12_temp.set_as_output("regi12")
+    # reg13_temp.set_as_output("regi13")
+    # reg14_temp.set_as_output("regi14")
+    # reg15_temp.set_as_output("regi15")
+

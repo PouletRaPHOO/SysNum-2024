@@ -32,7 +32,6 @@ let notb cons = match cons with
 let getval env a = match a with
   | Aconst cons -> cons
   | Avar i -> Env.find i env
-
 (*------------------------------Fonctions d'input----------------------------*)
 exception MauvaiseEntree
 let read_bit ident =
@@ -204,19 +203,20 @@ let prepass acc i (op:exp) =
       let fich = open_in (prep_name_file i) in
       for i = 0 to (1 lsl addr_size) -1 do
         let line = input_line fich in
-        if String.length line = word_size then emptyarr.(i) <- Array.of_list (List.map (fun x ->
+        if String.length line = word_size then begin
+          emptyarr.(i) <- Array.of_list (List.map (fun x ->
             match x with
             | '0'-> false
             | '1' -> true
             | _ -> raise BadInput
-          ) (explode_string line) )else raise BadLength
+          ) (explode_string line) ) end else raise BadLength
       done;
       (rams,Env.add i (emptyarr) roms,li)
 
     with
     | BadLength -> failwith "Mauvaise taille de fichier"
     | BadInput -> failwith "Mauvaise entrée"
-    | _ -> (rams,Env.add i (emptyarr) roms,li) )
+    | e ->  Printf.printf "%s" (Printexc.to_string e);(rams,Env.add i (emptyarr) roms,li) )
 
   | _ -> (rams,roms,li)
 
@@ -229,6 +229,7 @@ let simulator program number_steps =
   let e = ref (Env.map (fun v -> init v) program.p_vars) in
   let (rams,roms,li)  =  List.fold_left (fun acc (i,op) -> prepass acc i op)
       (Env.empty,Env.empty, []) program.p_eqs in
+  
 
   while not (!i = number_steps) do
     Printf.printf "Etape n°%d\n" (!i+1);
