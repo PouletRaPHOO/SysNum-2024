@@ -24,6 +24,7 @@
      "JMP", JMP;
      "JNE", JNE;
      "JGE", JGE;
+     "NOOP", NOOP;
     ]
 
     let id_or_kwd =
