@@ -78,14 +78,55 @@ let () =
 
     let oc = open_out (Filename.concat "roms" "actual_op") in
 
+    let int_to_binary size va =
+       let s = ref "" in
+       let v = ref (abs va) in
+       let q =  ref 1 lsl size in
+       for i = 1 to size do
+         let quotient = min (!v/!q, 1) in
+         v:= !v mod !q;
+         s := !s^quotient;
+         q:= !q/2;
+       done;
+       !s
+    in
+
+    let find_binop_type b = match b with
+      | Add | Sub | Mul -> "0001"
+      | And | Or | Xor -> "0010"
+
+   let find_binop_code b = match b with
+     | Add | And-> "0001"
+     | Sub | Or-> "0010"
+     | Xor | Mul -> "0011"
+
+
+
+
+    
     let rec passage2 p = match p with
       | [] -> ()
-      | Bexpr(exp)::q -> (match exp with
-          | Noop -> Printf.fprintf oc "%s\n" ("00000000000000000000000000000000");
+      | Bexpr(exp)::q -> Printf.fprint f oc "%s\n" (match exp with
+          | Noop ->
+            "00000000000000000000000000000000"
+          | Ebinop(b,i1,i2) -> (find_binop_type b)^(find_binop_code b)^(int_to_binary 4 i1)^(int_to_binary 20 i2)
+          | Eunop(u,i1) ->
+            "0011"^(find_unop_code u)^(int_to_binary 4 i1)^"00000000000000000000"
+          | Emovi(i1,i2) ->
+            "01110001"^(int_to_binary 4 i1)^(int_to_binary 20 i2)
+          | Emov(i1,i2) ->
+            "01100001"^(int_to_binary 4 i1)^(int_to_binary 20 i2)
+          | Ecmp(i1,i2) ->
+            "10000001"^(int_to_binary 4 i1)^(int_to_binary 20 i2)
+          | Ejump(j,i) -> let line = Env.find i env_label in
+            "0100"^(find_jump_code j)^(int_to_binary 20 line)
+          |Eloadfin(i1,i2) ->
+            "0101"^(int_to_binary)
+
           | _ -> assert false
 
 
-        )
+        ); passage2 q
       | _ -> assert false
 
     in
