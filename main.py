@@ -124,15 +124,12 @@ def main():
     ))
 
     p_temp = Mux(is_really_jumping, Slice( 16,32, arg2), n_p)
-    
-    res_al,asdfkije,sdljisfljk,einene = Alu(Constant("0"), Constant("0"), Constant("0"), Constant("1"), Constant("00110001"), Constant("0000000000000000000000000000001"), Constant("0000000000000000000000000000001"))
-    
+        
     to_sll = Constant("0001")
     slled = srl(to_sll, 1)
 
     slled.set_as_output("sll")
 
-    res_al.set_as_output("res_al")
     additional_code.set_as_output("add_code")
     is_ari.set_as_output("is_ari")
     # arg1_raw.set_as_output("arg1_raw")

@@ -41,7 +41,7 @@ def n_adder(a, b):
 
 def is_zero(a):
     zf = Constant("0")
-    for i in range(a.bus_size)
+    for i in range(a.bus_size):
         zf = zf | a[i]
     return Not(zf)
 
@@ -54,19 +54,15 @@ def bin_to_int(a):
     
 def oppose(a):
     not_a = Not(a)
-    return n_adder(not_a, Un)
+    s,_ = n_adder(not_a, Constant(Un))
+    return s
 
 def sll(a, n):
-    feur = Constant("0"*n)
-    feur2 = Concat(a, feur)
-    overflow = Constant("0")
-    if Slice(0, n, feur2) != feur:
-        overlow = Constant("1")
-    return (overflow, Slice(n, feur2.bus_size, feur2))
+    c = Constant("0")
+    for i in range(n):
+        a, ctemp = n_adder(a, a)
+        c = c | ctemp
+    return (c, a)
 
 def srl(a, n):
-    if a[0] == "1":
-        feur2 = Concat(Constant("1"*n), a)
-    else:
-        feur2 = Concat(Constant("0"*n), a)
-    return Slice(0, feur2.bus_size - n, feur2)
+    return Slice(0, a.bus_size, Mux(a[0], Concat(Constant("1"*n), a), Concat(Constant("0"*n), a)))
