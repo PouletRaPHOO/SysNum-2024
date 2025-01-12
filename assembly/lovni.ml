@@ -81,11 +81,11 @@ let () =
     let int_to_binary size va =
        let s = ref "" in
        let v = ref (abs va) in
-       let q =  ref 1 lsl size in
+       let q =  ref (1 lsl (size-1)) in
        for i = 1 to size do
-         let quotient = min (!v/!q, 1) in
+         let quotient = min (!v/(!q)) 1 in
          v:= !v mod !q;
-         s := !s^quotient;
+         s := !s^(Lexer.string_of_char (Char.chr (Char.code ('0') +quotient)));
          q:= !q/2;
        done;
        !s
@@ -93,21 +93,31 @@ let () =
 
     let find_binop_type b = match b with
       | Add | Sub | Mul -> "0001"
-      | And | Or | Xor -> "0010"
+      | And | Or | Xor -> "0010" in
 
    let find_binop_code b = match b with
      | Add | And-> "0001"
      | Sub | Or-> "0010"
-     | Xor | Mul -> "0011"
+     | Xor | Mul -> "0011" in
 
+   let find_unop_code b = match b with
+     | Not -> "0001"
+     | Sll -> "0010"
+     | Srl -> "0011" in
+
+   let find_jump_code j = match j with
+     | Jmp -> "0001"
+     | Jne -> "0010"
+     | Je ->"0011"
+     | Jge -> "0100" in
 
 
 
     
     let rec passage2 p = match p with
       | [] -> ()
-      | Bexpr(exp)::q -> Printf.fprint f oc "%s\n" (match exp with
-          | Noop ->
+      | Bexpr(exp)::q -> Printf.fprintf oc "%s\n" (match exp with
+          | Enoop ->
             "00000000000000000000000000000000"
           | Ebinop(b,i1,i2) -> (find_binop_type b)^(find_binop_code b)^(int_to_binary 4 i1)^(int_to_binary 20 i2)
           | Eunop(u,i1) ->
@@ -119,10 +129,15 @@ let () =
           | Ecmp(i1,i2) ->
             "10000001"^(int_to_binary 4 i1)^(int_to_binary 20 i2)
           | Ejump(j,i) -> let line = Env.find i env_label in
-            "0100"^(find_jump_code j)^(int_to_binary 20 line)
+            "0100"^(find_jump_code j)^"0000"^(int_to_binary 20 line)
           |Eloadfin(i1,i2) ->
-            "0101"^(int_to_binary)
-
+           "01010011"^(int_to_binary 4 i1)^(int_to_binary 20 i2)
+          |Estorefin(i1,i2) ->
+           "01010100"^(int_to_binary 4 i2)^(int_to_binary 20 i1)
+          |Estorereg(i1,i2) ->
+           "01010010"^(int_to_binary 4 i2)^(int_to_binary 20 i1)
+          |Eloadreg(i1,i2) ->
+           "01010001"^(int_to_binary 4 i1)^(int_to_binary 20 i2)
           | _ -> assert false
 
 
@@ -130,6 +145,8 @@ let () =
       | _ -> assert false
 
     in
+
+    passage2 p2;
     close_out oc;
 
     close_in f;

@@ -25,6 +25,8 @@
      "JNE", JNE;
      "JGE", JGE;
      "NOOP", NOOP;
+     "STO", STO;
+     "LOAD", LOAD
     ]
 
     let id_or_kwd =
@@ -74,7 +76,7 @@ let digit =  ['0'-'9']
 let register = '%''r' digit+
 let entier = '$' '-'? digit+
 let instr = upper+
-let label = lower+':'
+let label = lower+digit*':'
 let var = lower+
 
 let space = ' ' | '\t'
@@ -92,7 +94,7 @@ rule token = parse
     | instr as i  {id_or_kwd i}
     | entier as e {CST (decode_int e)}
     | eof  { EOF }
-    | _ as i { raise (Lexing_error ("opérande non reconnue : "))  }
+    | _ { raise (Lexing_error ("opérande non reconnue"))  }
 
 
 

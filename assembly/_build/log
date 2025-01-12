@@ -1,66 +1,163 @@
 # dune build
 # OCAMLPARAM: unset
-# Shared cache: disabled
-# Shared cache location: /home/pouletraphoo/.cache/dune/db
-# Workspace root: /home/pouletraphoo/Cours/ENS/Info/Sysnum/SysNum-2024/assembly
-# Auto-detected concurrency: 4
+# Workspace root:
+# /users/24/maths/rherzlich/Cours/Info/SysNum/SysNum-2024/assembly
+$ /bin/nproc > /tmp/dunec39637.output 2> /dev/null
+# Auto-detected concurrency: 20
+# disable binary cache
+$ /bin/ocamlc.opt -config > /tmp/dune0156c9.output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
-#  ; profile = Dev
+#  ; profile = Dyn
 #  ; merlin = true
+#  ; for_host = None
 #  ; fdo_target_exe = None
-#  ; build_dir = In_build_dir "default"
-#  ; installed_env =
+#  ; build_dir = "default"
+#  ; toplevel_path =
+#      Some External "/users/24/maths/rherzlich/.opam/default/lib/toplevel"
+#  ; ocaml_bin = External "/bin"
+#  ; ocaml = Ok External "/bin/ocaml"
+#  ; ocamlc = External "/bin/ocamlc.opt"
+#  ; ocamlopt = Ok External "/bin/ocamlopt.opt"
+#  ; ocamldep = Ok External "/bin/ocamldep.opt"
+#  ; ocamlmklib = Ok External "/bin/ocamlmklib.opt"
+#  ; env =
 #      map
-#        { "INSIDE_DUNE" :
-#            "/home/pouletraphoo/Cours/ENS/Info/Sysnum/SysNum-2024/assembly/_build/default"
+#        { "DUNE_OCAML_HARDCODED" : "/usr/lib/ocaml"
+#        ; "DUNE_OCAML_STDLIB" : "/usr/lib/ocaml"
+#        ; "DUNE_SOURCEROOT" :
+#            "/users/24/maths/rherzlich/Cours/Info/SysNum/SysNum-2024/assembly"
+#        ; "INSIDE_DUNE" :
+#            "/users/24/maths/rherzlich/Cours/Info/SysNum/SysNum-2024/assembly/_build/default"
+#        ; "OCAMLFIND_IGNORE_DUPS_IN" :
+#            "/users/24/maths/rherzlich/Cours/Info/SysNum/SysNum-2024/assembly/_build/install/default/lib"
+#        ; "OCAMLPATH" :
+#            "/users/24/maths/rherzlich/Cours/Info/SysNum/SysNum-2024/assembly/_build/install/default/lib"
+#        ; "OCAMLTOP_INCLUDE_PATH" :
+#            "/users/24/maths/rherzlich/Cours/Info/SysNum/SysNum-2024/assembly/_build/install/default/lib/toplevel"
 #        ; "OCAML_COLOR" : "always"
 #        ; "OPAMCOLOR" : "always"
 #        }
-#  ; instrument_with = []
+#  ; findlib_path = [ External "/usr/lib/ocaml" ]
+#  ; arch_sixtyfour = true
+#  ; natdynlink_supported = true
+#  ; supports_shared_libraries = true
+#  ; ocaml_config =
+#      { version = "4.13.1"
+#      ; standard_library_default = "/usr/lib/ocaml"
+#      ; standard_library = "/usr/lib/ocaml"
+#      ; standard_runtime = "the_standard_runtime_variable_was_deleted"
+#      ; ccomp_type = "cc"
+#      ; c_compiler = "x86_64-linux-gnu-gcc"
+#      ; ocamlc_cflags =
+#          [ "-O2"
+#          ; "-fno-strict-aliasing"
+#          ; "-fwrapv"
+#          ; "-pthread"
+#          ; "-fPIC"
+#          ; "-g"
+#          ; "-O2"
+#          ; "-ffile-prefix-map=/build/ocaml-SC7b9w/ocaml-4.13.1=."
+#          ; "-fstack-protector-strong"
+#          ; "-Wformat"
+#          ; "-Werror=format-security"
+#          ]
+#      ; ocamlc_cppflags =
+#          [ "-D_FILE_OFFSET_BITS=64"; "-Wdate-time"; "-D_FORTIFY_SOURCE=2" ]
+#      ; ocamlopt_cflags =
+#          [ "-O2"
+#          ; "-fno-strict-aliasing"
+#          ; "-fwrapv"
+#          ; "-pthread"
+#          ; "-fPIC"
+#          ; "-g"
+#          ; "-O2"
+#          ; "-ffile-prefix-map=/build/ocaml-SC7b9w/ocaml-4.13.1=."
+#          ; "-fstack-protector-strong"
+#          ; "-Wformat"
+#          ; "-Werror=format-security"
+#          ]
+#      ; ocamlopt_cppflags =
+#          [ "-D_FILE_OFFSET_BITS=64"; "-Wdate-time"; "-D_FORTIFY_SOURCE=2" ]
+#      ; bytecomp_c_compiler =
+#          [ "x86_64-linux-gnu-gcc"
+#          ; "-O2"
+#          ; "-fno-strict-aliasing"
+#          ; "-fwrapv"
+#          ; "-pthread"
+#          ; "-fPIC"
+#          ; "-g"
+#          ; "-O2"
+#          ; "-ffile-prefix-map=/build/ocaml-SC7b9w/ocaml-4.13.1=."
+#          ; "-fstack-protector-strong"
+#          ; "-Wformat"
+#          ; "-Werror=format-security"
+#          ; "-D_FILE_OFFSET_BITS=64"
+#          ; "-Wdate-time"
+#          ; "-D_FORTIFY_SOURCE=2"
+#          ]
+#      ; bytecomp_c_libraries = [ "-lm"; "-lpthread" ]
+#      ; native_c_compiler =
+#          [ "x86_64-linux-gnu-gcc"
+#          ; "-O2"
+#          ; "-fno-strict-aliasing"
+#          ; "-fwrapv"
+#          ; "-pthread"
+#          ; "-fPIC"
+#          ; "-g"
+#          ; "-O2"
+#          ; "-ffile-prefix-map=/build/ocaml-SC7b9w/ocaml-4.13.1=."
+#          ; "-fstack-protector-strong"
+#          ; "-Wformat"
+#          ; "-Werror=format-security"
+#          ; "-D_FILE_OFFSET_BITS=64"
+#          ; "-Wdate-time"
+#          ; "-D_FORTIFY_SOURCE=2"
+#          ]
+#      ; native_c_libraries = [ "-lm" ]
+#      ; cc_profile = []
+#      ; architecture = "amd64"
+#      ; model = "default"
+#      ; int_size = 63
+#      ; word_size = 64
+#      ; system = "linux"
+#      ; asm = [ "x86_64-linux-gnu-as" ]
+#      ; asm_cfi_supported = true
+#      ; with_frame_pointers = false
+#      ; ext_exe = ""
+#      ; ext_obj = ".o"
+#      ; ext_asm = ".s"
+#      ; ext_lib = ".a"
+#      ; ext_dll = ".so"
+#      ; os_type = "Unix"
+#      ; default_executable_name = "a.out"
+#      ; systhread_supported = true
+#      ; host = "x86_64-pc-linux-gnu"
+#      ; target = "x86_64-pc-linux-gnu"
+#      ; profiling = false
+#      ; flambda = false
+#      ; spacetime = false
+#      ; safe_string = true
+#      ; exec_magic_number = "Caml1999X030"
+#      ; cmi_magic_number = "Caml1999I030"
+#      ; cmo_magic_number = "Caml1999O030"
+#      ; cma_magic_number = "Caml1999A030"
+#      ; cmx_magic_number = "Caml1999Y030"
+#      ; cmxa_magic_number = "Caml1999Z030"
+#      ; ast_impl_magic_number = "Caml1999M030"
+#      ; ast_intf_magic_number = "Caml1999N030"
+#      ; cmxs_magic_number = "Caml1999D030"
+#      ; cmt_magic_number = "Caml1999T030"
+#      ; natdynlink_supported = true
+#      ; supports_shared_libraries = true
+#      ; windows_unicode = false
+#      }
 #  }
-$ /home/pouletraphoo/.opam/default/bin/ocamlc.opt -config > /tmp/dune_4f885c_output
-$ (cd _build/default && /home/pouletraphoo/.opam/default/bin/ocamldep.opt -modules -impl lovni.ml) > _build/default/.lovni.eobjs/lovni.impl.d
-$ (cd _build/default && /home/pouletraphoo/.opam/default/bin/ocamlc.opt -g -bin-annot -I .lovni.eobjs/byte -I /home/pouletraphoo/.opam/default/lib/graphics -no-alias-deps -opaque -o .lovni.eobjs/byte/lovni.cmo -c -impl lovni.ml)
-> File "lovni.ml", line 77, characters 8-17:
-> 77 |     let env_label,env_var, p2 = premier_passage 0 0 0 (Env.empty) (Env.empty) p in
->              ^^^^^^^^^
-> Warning 26 [unused-var]: unused variable env_label.
->
-> File "lovni.ml", line 77, characters 18-25:
-> 77 |     let env_label,env_var, p2 = premier_passage 0 0 0 (Env.empty) (Env.empty) p in
->                        ^^^^^^^
-> Warning 26 [unused-var]: unused variable env_var.
->
-> File "lovni.ml", line 77, characters 27-29:
-> 77 |     let env_label,env_var, p2 = premier_passage 0 0 0 (Env.empty) (Env.empty) p in
->                                 ^^
-> Warning 26 [unused-var]: unused variable p2.
->
-> File "lovni.ml", line 81, characters 12-20:
-> 81 |     let rec passage2 p = match p with
->                  ^^^^^^^^
-> Warning 26 [unused-var]: unused variable passage2.
-$ (cd _build/default && /home/pouletraphoo/.opam/default/bin/ocamlopt.opt -g -I .lovni.eobjs/byte -I .lovni.eobjs/native -I /home/pouletraphoo/.opam/default/lib/graphics -intf-suffix .ml -no-alias-deps -opaque -o .lovni.eobjs/native/lovni.cmx -c -impl lovni.ml)
-> File "lovni.ml", line 77, characters 8-17:
-> 77 |     let env_label,env_var, p2 = premier_passage 0 0 0 (Env.empty) (Env.empty) p in
->              ^^^^^^^^^
-> Warning 26 [unused-var]: unused variable env_label.
->
-> File "lovni.ml", line 77, characters 18-25:
-> 77 |     let env_label,env_var, p2 = premier_passage 0 0 0 (Env.empty) (Env.empty) p in
->                        ^^^^^^^
-> Warning 26 [unused-var]: unused variable env_var.
->
-> File "lovni.ml", line 77, characters 27-29:
-> 77 |     let env_label,env_var, p2 = premier_passage 0 0 0 (Env.empty) (Env.empty) p in
->                                 ^^
-> Warning 26 [unused-var]: unused variable p2.
->
-> File "lovni.ml", line 81, characters 12-20:
-> 81 |     let rec passage2 p = match p with
->                  ^^^^^^^^
-> Warning 26 [unused-var]: unused variable passage2.
-$ (cd _build/default && /home/pouletraphoo/.opam/default/bin/ocamlopt.opt -g -o lovni.exe /home/pouletraphoo/.opam/default/lib/graphics/graphics.cmxa -I /home/pouletraphoo/.opam/default/lib/graphics .lovni.eobjs/native/ast.cmx .lovni.eobjs/native/parser.cmx .lovni.eobjs/native/lexer.cmx .lovni.eobjs/native/lovni.cmx)
-# Promoting "_build/default/lovni.exe" to "lovni.exe"
+$ (cd _build/default && /bin/ocamllex -q -o lexer.ml lexer.mll)
+$ (cd _build/default && /bin/ocamldep.opt -modules -impl lexer.ml) > _build/default/.lovni.eobjs/lexer.ml.d
+$ (cd _build/default && /bin/ocamlc.opt -g -bin-annot -I .lovni.eobjs/byte -no-alias-deps -opaque -o .lovni.eobjs/byte/lexer.cmo -c -impl lexer.ml)
+$ (cd _build/default && /bin/ocamlopt.opt -g -I .lovni.eobjs/byte -I .lovni.eobjs/native -intf-suffix .ml -no-alias-deps -opaque -o .lovni.eobjs/native/lexer.cmx -c -impl lexer.ml)
+$ (cd _build/default && /bin/ocamlc.opt -g -bin-annot -I .lovni.eobjs/byte -no-alias-deps -opaque -o .lovni.eobjs/byte/lovni.cmo -c -impl lovni.ml)
+$ (cd _build/default && /bin/ocamlopt.opt -g -I .lovni.eobjs/byte -I .lovni.eobjs/native -intf-suffix .ml -no-alias-deps -opaque -o .lovni.eobjs/native/lovni.cmx -c -impl lovni.ml)
+$ (cd _build/default && /bin/ocamlopt.opt -g -o lovni.exe .lovni.eobjs/native/ast.cmx .lovni.eobjs/native/parser.cmx .lovni.eobjs/native/lexer.cmx .lovni.eobjs/native/lovni.cmx)

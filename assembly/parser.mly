@@ -19,6 +19,7 @@
 %token EOF
 %token LINEFEED
 %token NOOP
+%token STO LOAD
 
 /* Priorités et associativités des tokens */
 
@@ -47,6 +48,8 @@ exp:
     | MOV i1 = REG i2= CST {Emovi (i1,i2)}
     | MOV i1 = REG i=VAR {Eload(i1,i)}
     | MOV i1 = VAR i2 = REG {Estore(i1,i2)}
+    | LOAD i1 = REG i2 = REG {Eloadreg(i1,i2)}
+    | STO i1 = REG i2 = REG {Estorereg(i1,i2)}
     | j=jump i = VAR {Ejump(j,i)}
     | CMP i1 = REG i2 = REG {Ecmp(i1,i2)}
     | NOOP {Enoop}

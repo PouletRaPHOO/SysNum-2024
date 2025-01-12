@@ -1,1 +1,10 @@
-MOV %r1 $2;
+MOV %r1 $2; //test commentaire
+(*ICI CA BAISE*)
+
+NOOP;
+test:
+MOV %r2 $3;
+JMP test;
+testdeux:
+MOV %r2 %r4;
+ADD %r2 %r4;

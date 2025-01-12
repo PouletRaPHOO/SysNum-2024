@@ -27,6 +27,8 @@ type bexpr =
   | Estore of ident*int
   | Eloadfin of int*int
   | Estorefin of int*int
+  | Estorereg of int*int
+  | Eloadreg of int*int
 
 
 
