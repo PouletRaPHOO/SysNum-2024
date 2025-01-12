@@ -4,8 +4,12 @@ from Utils.utils import *
 def Alu(is_ari, is_bool, is_cmp, unary, add_code, arg1, arg2):
     bit0 = Constant("0")
 
-    s_add, c_add = n_adder(arg1, arg2)
-    s_sub, c_sub = n_adder(arg1, arg2)
+
+    _,e1,e2,_,_,_,_,_,_,_,_,_,_,_,_,_ = mux4(add_code)
+
+    reel_arg2 = Mux(is_cmp|(is_ari&e2), oppose(arg2), arg2)
+
+    s_op, c_op = n_adder(arg1, reel_arg2)
     s_mul, c_mul = Constant("0"*32), bit0
 #     temp_mul, ctemp_mul = arg2, Constant("0")
     # for i in range(32):
@@ -21,33 +25,29 @@ def Alu(is_ari, is_bool, is_cmp, unary, add_code, arg1, arg2):
 
     r_xor = Xor(arg1, arg2)
 
-    s_cmp, c_cmp = n_adder(arg1, oppose(arg2))
-    
     not_arg = Not(arg1)
 
     srl_arg = srl(arg1)
 
     of_sll, sll_arg = sll(arg1)
 
-    _,e1,e2,_,_,_,_,_,_,_,_,_,_,_,_,_ = mux4(add_code)
 
-    ari_mux_val = Mux(e1, s_add, Mux(e2, s_sub, s_mul))
-    ari_mux_of = Mux(e1, c_add, Mux(e2, c_sub, c_mul))
+
+    ari_mux_val = Mux(e1|e2, s_op, s_mul)
+    ari_mux_of = Mux(e1|e2, c_op, c_mul)
 
     bool_mux_val = Mux(e1, r_and, Mux(e2, r_or, r_xor))
 
-    cmp_val = s_cmp
-    cmp_of = c_cmp
 
     unary_mux_val = Mux(e1, not_arg, Mux(e2, srl_arg, sll_arg))
-    unary_mux_of = Mux(e1|e2, bool_mux_of, of_sll)
+    unary_mux_of = Mux(e1|e2, bit0, of_sll)
 
-    val_final = Mux(is_ari, ari_mux_val, Mux(is_bool, bool_mux_val, Mux(is_cmp, cmp_val, unary_mux_val)))
+    val_final = Mux(is_ari|is_cmp, ari_mux_val, Mux(is_bool, bool_mux_val, unary_mux_val))
     zf_final = is_zero(val_final)
     sf_final = val_final[0]
 
     return (val_final,
-            Mux(is_ari, ari_mux_of, Mux(is_bool, bit0, Mux(is_cmp, cmp_of, unary_mux_of))),
+            Mux(is_ari|is_cmp, ari_mux_of, Mux(is_bool, bit0, unary_mux_of)),
             zf_final,
             sf_final)
 
