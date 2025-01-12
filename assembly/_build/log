@@ -1,10 +1,10 @@
 # dune build
 # OCAMLPARAM: unset
 # Workspace root: /users/24/info/ahelary/Documents/SysNum/SysNum-2024/assembly
-$ /usr/bin/nproc > /tmp/dune03fcd6.output 2> /dev/null
+$ /usr/bin/nproc > /tmp/dune1c5a0c.output 2> /dev/null
 # Auto-detected concurrency: 20
 # disable binary cache
-$ /usr/bin/ocamlc.opt -config > /tmp/duneb04946.output
+$ /usr/bin/ocamlc.opt -config > /tmp/dune7d939f.output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -156,3 +156,7 @@ $ /usr/bin/ocamlc.opt -config > /tmp/duneb04946.output
 #      ; windows_unicode = false
 #      }
 #  }
+$ (cd _build/default && /usr/bin/ocamldep.opt -modules -impl lovni.ml) > _build/default/.lovni.eobjs/lovni.ml.d
+$ (cd _build/default && /usr/bin/ocamlc.opt -g -bin-annot -I .lovni.eobjs/byte -no-alias-deps -opaque -o .lovni.eobjs/byte/lovni.cmo -c -impl lovni.ml)
+$ (cd _build/default && /usr/bin/ocamlopt.opt -g -I .lovni.eobjs/byte -I .lovni.eobjs/native -intf-suffix .ml -no-alias-deps -opaque -o .lovni.eobjs/native/lovni.cmx -c -impl lovni.ml)
+$ (cd _build/default && /usr/bin/ocamlopt.opt -g -o lovni.exe .lovni.eobjs/native/ast.cmx .lovni.eobjs/native/parser.cmx .lovni.eobjs/native/lexer.cmx .lovni.eobjs/native/lovni.cmx)
