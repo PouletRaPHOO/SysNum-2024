@@ -114,8 +114,59 @@ SLL %r13;
 SLL %r13;
 JNE twentyEight;
 
+MOV %r13 %r8; // multiplicité par 100
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+MOV %r14 $6553600;
+CMP %r13 %r14;
+JNE bissextile;
+
+MOV %r12 $100; // multiplicité par 400
+SUB %r8 %r12;
+MOV %r13 %r8;
+SRL %r13;
+SRL %r13;
+SRL %r13;
+SRL %r13;
+SRL %r13;
+SRL %r13;
+SRL %r13;
+SRL %r13;
+SRL %r13;
+SRL %r13;
+SRL %r13;
+SRL %r13;
+SRL %r13;
+SRL %r13;
+SRL %r13;
+SRL %r13;
+MOV %r14 $400;
+CMP %r13 %r14;
+JE fourHundred;
+
 twentyEight:
 MOV %r12 $28;
+CMP %r12 %r6;
+JE nextMonth;
+
+fourHundred:
+MOV %r8 $0;
+bissextile:
+MOV %r12 $29;
 CMP %r12 %r6;
 JE nextMonth;
 
@@ -134,6 +185,10 @@ ADD %r6 %r9;
 MOV %r12 $12;
 MOV %r4 $0;
 CMP %r12 %r6;
-JNE inc
-MOV %r6 $0
+JNE inc;
+MOV %r6 $0;
+ADD %r7 %r9;
+ADD %r8 %r9;
+MOV %r12 $65536; 
+ADD %r8 %r12;
 
