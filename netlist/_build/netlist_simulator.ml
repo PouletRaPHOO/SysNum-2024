@@ -232,7 +232,7 @@ let simulator program number_steps =
   
 
   while not (!i = number_steps) do
-    Printf.printf "Etape n°%d\n" (!i+1);
+    if !i mod 100 = 0 then Printf.printf "Etape n°%d\n %!" (!i+1);
     e := read_input program.p_vars program.p_inputs !e;
     e := List.fold_left (fun acc op ->
         call_op acc op !e rams roms) !e program.p_eqs;

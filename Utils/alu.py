@@ -5,39 +5,32 @@ def Alu(is_ari, is_bool, is_cmp, unary, add_code, arg1, arg2):
     s_add, c_add = n_adder(arg1, arg2)
     s_sub, c_sub = n_adder(arg1, arg2)
     s_mul, c_mul = Constant("0"*32), Constant("0")
-    temp_mul, ctemp_mul = arg2, Constant("0")
-    for i in range(32):
-        ctemp_mul, temp_mul = sll(temp_mul, 1)
-        c_mul = Or(c_mul, ctemp_mul)
-        sadd_mul, ctempadd_mul = n_adder(s_mul, temp_mul)
-        s_mul, ctemp_mul = Mux(arg1[i], sadd_mul, s_mul), Mux(arg1[i], ctempadd_mul, ctemp_mul)
-        c_mul = Or(c_mul, ctemp_mul)
+#     temp_mul, ctemp_mul = arg2, Constant("0")
+    # for i in range(32):
+    #     ctemp_mul, temp_mul = sll(temp_mul)
+    #     c_mul = Or(c_mul, ctemp_mul)
+    #     sadd_mul, ctempadd_mul = n_adder(s_mul, temp_mul)
+    #     s_mul, ctemp_mul = Mux(arg1[i], sadd_mul, s_mul), Mux(arg1[i], ctempadd_mul, ctemp_mul)
+    #     c_mul = Or(c_mul, ctemp_mul)
     
     r_and = And(arg1, arg2)
     of_and = Constant("0")
-    zf_and = is_zero(r_and)
-    sf_and = r_and[0]
     
     r_or = Or(arg1, arg2)
     of_or = Constant("0")
-    zf_or = is_zero(r_or)
-    sf_or = r_or[0]
-
 
     r_xor = Xor(arg1, arg2)
     of_xor = Constant("0")
-    zf_xor = is_zero(r_xor)
-    sf_or = r_xor[0]
 
     s_cmp, c_cmp = n_adder(arg1, oppose(arg2))
     
     not_arg = Not(arg1)
 
-    srl_arg = srl(arg1,1)
+    srl_arg = srl(arg1)
 
-    of_sll, sll_arg = sll(arg1,1)
+    of_sll, sll_arg = sll(arg1)
 
-    _,e1,e2,e3,e4,_,_,_,_,_,_,_,_,_,_,_ = mux4(add_code)
+    _,e1,e2,_,_,_,_,_,_,_,_,_,_,_,_,_ = mux4(add_code)
 
     ari_mux_val = Mux(e1, s_add, Mux(e2, s_sub, s_mul))
     ari_mux_of = Mux(e1, c_add, Mux(e2, c_sub, c_mul))
