@@ -5,14 +5,17 @@ type token =
   | XOR
   | VAR of (string)
   | SUB
+  | STO
   | SRL
   | SLL
   | SEMICOLON
   | REG of (int)
   | OR
   | NOT
+  | NOOP
   | MUL
   | MOV
+  | LOAD
   | LINEFEED
   | LABEL of (string)
   | JNE

@@ -8,5 +8,4 @@
 (executable
  (name lovni)
  (promote (until-clean))
- (flags ())
- (libraries graphics))
+ (flags ()))

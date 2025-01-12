@@ -16,7 +16,7 @@ type unop = Sll | Srl | Not
 type jump = Jmp | Jge | Jne | Je
 
 type bexpr =
-  | Noop
+  | Enoop
   | Ebinop of binop*int*int
   | Eunop of unop*int
   | Emovi of int*int
@@ -27,6 +27,8 @@ type bexpr =
   | Estore of ident*int
   | Eloadfin of int*int
   | Estorefin of int*int
+  | Estorereg of int*int
+  | Eloadreg of int*int
 
 
 

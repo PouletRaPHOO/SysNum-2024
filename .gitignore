@@ -1,3 +1,4 @@
 __pycache__/
-netlist/_build
+netlist/_build/
 .~lock*
+assembly/_build/
