@@ -30,7 +30,7 @@ MOV %r15 $0; // Attention regarder la def de r8
 MOV %r8 %r15;
 
 MOV %r9 $1;
-MOV %r10 $100;
+MOV %r10 $2;
 MOV %r11 $60;
 
 inc:

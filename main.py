@@ -99,9 +99,9 @@ def main():
 
     #Enfer sur terre (le 3)
 
-    zf_temp = Mux(And(isflagwritingneeded,x15), zf, ZF )
-    sf_temp = Mux(And(isflagwritingneeded,x15), sf, SF )
-    of_temp = Mux(And(isflagwritingneeded,x15), of, OF )
+    zf_temp = Mux(isflagwritingneeded, zf, ZF )
+    sf_temp = Mux(isflagwritingneeded, sf, SF )
+    of_temp = Mux(isflagwritingneeded, of, OF )
 
     is_really_jumping = And(is_jump, or4(
         c1, #jmp
@@ -133,7 +133,7 @@ def main():
     reg6_temp.set_as_output("mois")
     reg7_temp.set_as_output("annee")
     # reg8_temp.set_as_output("bissextile")
-    # reg9_temp.set_as_output("regi9")
+    reg9_temp.set_as_output("un")
     # reg10_temp.set_as_output("regi10")
     # reg11_temp.set_as_output("regi11")
     # reg12_temp.set_as_output("regi12")
