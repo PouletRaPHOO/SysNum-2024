@@ -4,6 +4,8 @@
 \author{HORNERO Baptiste \\ HERZLICH Raphaël \\ HELARY Axel}
 \date{}
 
+\usepackage[margin=.5in]{geometry}
+
 \begin{document}
 
 \maketitle
@@ -45,20 +47,24 @@ et :
     Instruction & Encodage & Description & Arguments & Description
 formelle \\ \hline
     MOV   & 0000 1010 & Met un registre à la valeur d'un autre registre &
-rs1 rs2  & rs1 <- rs2\\ \hline
+rs1 rs2  & rs1 $\gets$ rs2\\ \hline
     MOVI  & 0000 1011 & Met une valeur immédiate dans un registre & rs1
-immediate & rs1 <- immediate\\\hline
-    JMP   & 0000 1100 & Jump à une valeur & immediate & P <- immediate\\ \hline
+immediate & rs1 $\gets$ immediate\\\hline
+    JMP   & 0000 1100 & Jump à une valeur & immediate & P $\gets$ immediate\\ \hline
     CMP   & 0000 1101 & Compare deux valeurs & rs1 rs2& Mise à jour des
 flags\\ \hline
     JE    & 0000 1110 & Jump si égal (ZF = 1) & immediate&  Si ZF = 1
-alors P <- immediate \\ \hline
+alors P $\gets$ immediate \\ \hline
     JNE   & 0000 1111 & Jump si non égal (ZF = 0) & immediate& Si ZF =0
-alors P<- immediate\\ \hline
+alors P$\gets$ immediate\\ \hline
     JGE   & 0001 0000 & Jump si plus grand ou égal & immediate& Si OF=SF
-alors P <- immediate\\ \hline
-    LOAD  & 0001 0001 & Lit dans la ram & rs1 rs2& rs1 <- R[rs2]\\ \hline
-    STORE & 0001 0010 & Stocke dans la ram & rs1 rs2& R[rs1] <- rs2\\ \hline
+alors P $\gets$ immediate\\ \hline
+    LOAD  & 0001 0001 & Lit dans la ram & rs1 rs2& rs1 $\gets$ R[rs2]\\ \hline
+    STORE & 0001 0010 & Stocke dans la ram & rs1 rs2& R[rs2] $\gets$ rs1\\ \hline
+    LOADFIX  & 0001 0001 & Lit dans la ram & rs1 immediate& rs1 $\gets$ R[immediate]\\ \hline
+    STOREFIX & 0001 0010 & Stocke dans la ram & rs1 immediate& R[immediate] $\gets$ rs1\\ \hline
+
+
 \end{tabular}
 
 
