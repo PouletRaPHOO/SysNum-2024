@@ -30,7 +30,7 @@ MOV %r15 $0; // Attention regarder la def de r8
 MOV %r8 %r15;
 
 MOV %r9 $1;
-MOV %r10 $2;
+MOV %r10 $140;
 MOV %r11 $60;
 
 inc:
@@ -56,10 +56,11 @@ JNE inc;
 MOV %r3 $0;
 MOV %r12 $7;
 ADD %r4 %r9;
-CMP %r4 %r12;
+ADD %r5 %r9;
+CMP %r5 %r12;
 JNE nextDay;
 
-MOV %r4 $0; // si on est en fin de semaine
+MOV %r5 $0; // si on est en fin de semaine
 
 nextDay:
 MOV %r12 $0; // janvier
@@ -179,24 +180,24 @@ JE fourHundred;
 twentyEight:
 MOV %r12 $28;
 CMP %r12 %r6;
-JE nextMonth;
+JNE inc;
 
 fourHundred:
 MOV %r8 $0;
 bissextile:
 MOV %r12 $29;
 CMP %r12 %r6;
-JE nextMonth;
+JNE inc;
 
 shortMonth: // mois de 30 jours
 MOV %r12 $30;
 CMP %r4 %r12;
-JE nextMonth;
+JNE inc;
 
 longMonth:     // mois de 31 jours
 MOV %r12 $31;
 CMP %r4 %r12;
-JE nextMonth;
+JNE inc;
 
 nextMonth:
 ADD %r6 %r9;
