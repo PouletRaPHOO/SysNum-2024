@@ -2,9 +2,11 @@ from lib_carotte import *
 from Utils.utils import *
 
 def Alu(is_ari, is_bool, is_cmp, unary, add_code, arg1, arg2):
+    bit0 = Constant("0")
+
     s_add, c_add = n_adder(arg1, arg2)
     s_sub, c_sub = n_adder(arg1, arg2)
-    s_mul, c_mul = Constant("0"*32), Constant("0")
+    s_mul, c_mul = Constant("0"*32), bit0
 #     temp_mul, ctemp_mul = arg2, Constant("0")
     # for i in range(32):
     #     ctemp_mul, temp_mul = sll(temp_mul)
@@ -14,13 +16,10 @@ def Alu(is_ari, is_bool, is_cmp, unary, add_code, arg1, arg2):
     #     c_mul = Or(c_mul, ctemp_mul)
     
     r_and = And(arg1, arg2)
-    of_and = Constant("0")
-    
+
     r_or = Or(arg1, arg2)
-    of_or = Constant("0")
 
     r_xor = Xor(arg1, arg2)
-    of_xor = Constant("0")
 
     s_cmp, c_cmp = n_adder(arg1, oppose(arg2))
     
@@ -36,20 +35,19 @@ def Alu(is_ari, is_bool, is_cmp, unary, add_code, arg1, arg2):
     ari_mux_of = Mux(e1, c_add, Mux(e2, c_sub, c_mul))
 
     bool_mux_val = Mux(e1, r_and, Mux(e2, r_or, r_xor))
-    bool_mux_of = Mux(e1, of_and, Mux(e2, of_or, of_xor))
 
     cmp_val = s_cmp
     cmp_of = c_cmp
 
     unary_mux_val = Mux(e1, not_arg, Mux(e2, srl_arg, sll_arg))
-    unary_mux_of = Mux(e1, Constant("0"), Mux(e2, Constant("0"), of_sll))
+    unary_mux_of = Mux(e1|e2, bool_mux_of, of_sll)
 
     val_final = Mux(is_ari, ari_mux_val, Mux(is_bool, bool_mux_val, Mux(is_cmp, cmp_val, unary_mux_val)))
     zf_final = is_zero(val_final)
     sf_final = val_final[0]
 
     return (val_final,
-            Mux(is_ari, ari_mux_of, Mux(is_bool, bool_mux_of, Mux(is_cmp, cmp_of, unary_mux_of))),
+            Mux(is_ari, ari_mux_of, Mux(is_bool, bit0, Mux(is_cmp, cmp_of, unary_mux_of))),
             zf_final,
             sf_final)
 
