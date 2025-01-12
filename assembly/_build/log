@@ -1,11 +1,10 @@
 # dune build
 # OCAMLPARAM: unset
-# Workspace root:
-# /users/24/maths/rherzlich/Cours/Info/SysNum/SysNum-2024/assembly
-$ /bin/nproc > /tmp/dunec39637.output 2> /dev/null
+# Workspace root: /users/24/info/ahelary/Documents/SysNum/SysNum-2024/assembly
+$ /usr/bin/nproc > /tmp/dune03fcd6.output 2> /dev/null
 # Auto-detected concurrency: 20
 # disable binary cache
-$ /bin/ocamlc.opt -config > /tmp/dune0156c9.output
+$ /usr/bin/ocamlc.opt -config > /tmp/duneb04946.output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -14,28 +13,31 @@ $ /bin/ocamlc.opt -config > /tmp/dune0156c9.output
 #  ; for_host = None
 #  ; fdo_target_exe = None
 #  ; build_dir = "default"
-#  ; toplevel_path =
-#      Some External "/users/24/maths/rherzlich/.opam/default/lib/toplevel"
-#  ; ocaml_bin = External "/bin"
-#  ; ocaml = Ok External "/bin/ocaml"
-#  ; ocamlc = External "/bin/ocamlc.opt"
-#  ; ocamlopt = Ok External "/bin/ocamlopt.opt"
-#  ; ocamldep = Ok External "/bin/ocamldep.opt"
-#  ; ocamlmklib = Ok External "/bin/ocamlmklib.opt"
+#  ; toplevel_path = None
+#  ; ocaml_bin = External "/usr/bin"
+#  ; ocaml = Ok External "/usr/bin/ocaml"
+#  ; ocamlc = External "/usr/bin/ocamlc.opt"
+#  ; ocamlopt = Ok External "/usr/bin/ocamlopt.opt"
+#  ; ocamldep = Ok External "/usr/bin/ocamldep.opt"
+#  ; ocamlmklib = Ok External "/usr/bin/ocamlmklib.opt"
 #  ; env =
 #      map
-#        { "DUNE_OCAML_HARDCODED" : "/usr/lib/ocaml"
+#        { "CAML_LD_LIBRARY_PATH" :
+#            "/users/24/info/ahelary/Documents/SysNum/SysNum-2024/assembly/_build/install/default/lib/stublibs"
+#        ; "DUNE_OCAML_HARDCODED" : "/usr/lib/ocaml"
 #        ; "DUNE_OCAML_STDLIB" : "/usr/lib/ocaml"
 #        ; "DUNE_SOURCEROOT" :
-#            "/users/24/maths/rherzlich/Cours/Info/SysNum/SysNum-2024/assembly"
+#            "/users/24/info/ahelary/Documents/SysNum/SysNum-2024/assembly"
 #        ; "INSIDE_DUNE" :
-#            "/users/24/maths/rherzlich/Cours/Info/SysNum/SysNum-2024/assembly/_build/default"
+#            "/users/24/info/ahelary/Documents/SysNum/SysNum-2024/assembly/_build/default"
+#        ; "MANPATH" :
+#            "/users/24/info/ahelary/Documents/SysNum/SysNum-2024/assembly/_build/install/default/bin"
 #        ; "OCAMLFIND_IGNORE_DUPS_IN" :
-#            "/users/24/maths/rherzlich/Cours/Info/SysNum/SysNum-2024/assembly/_build/install/default/lib"
+#            "/users/24/info/ahelary/Documents/SysNum/SysNum-2024/assembly/_build/install/default/lib"
 #        ; "OCAMLPATH" :
-#            "/users/24/maths/rherzlich/Cours/Info/SysNum/SysNum-2024/assembly/_build/install/default/lib"
+#            "/users/24/info/ahelary/Documents/SysNum/SysNum-2024/assembly/_build/install/default/lib"
 #        ; "OCAMLTOP_INCLUDE_PATH" :
-#            "/users/24/maths/rherzlich/Cours/Info/SysNum/SysNum-2024/assembly/_build/install/default/lib/toplevel"
+#            "/users/24/info/ahelary/Documents/SysNum/SysNum-2024/assembly/_build/install/default/lib/toplevel"
 #        ; "OCAML_COLOR" : "always"
 #        ; "OPAMCOLOR" : "always"
 #        }
@@ -154,10 +156,3 @@ $ /bin/ocamlc.opt -config > /tmp/dune0156c9.output
 #      ; windows_unicode = false
 #      }
 #  }
-$ (cd _build/default && /bin/ocamllex -q -o lexer.ml lexer.mll)
-$ (cd _build/default && /bin/ocamldep.opt -modules -impl lexer.ml) > _build/default/.lovni.eobjs/lexer.ml.d
-$ (cd _build/default && /bin/ocamlc.opt -g -bin-annot -I .lovni.eobjs/byte -no-alias-deps -opaque -o .lovni.eobjs/byte/lexer.cmo -c -impl lexer.ml)
-$ (cd _build/default && /bin/ocamlopt.opt -g -I .lovni.eobjs/byte -I .lovni.eobjs/native -intf-suffix .ml -no-alias-deps -opaque -o .lovni.eobjs/native/lexer.cmx -c -impl lexer.ml)
-$ (cd _build/default && /bin/ocamlc.opt -g -bin-annot -I .lovni.eobjs/byte -no-alias-deps -opaque -o .lovni.eobjs/byte/lovni.cmo -c -impl lovni.ml)
-$ (cd _build/default && /bin/ocamlopt.opt -g -I .lovni.eobjs/byte -I .lovni.eobjs/native -intf-suffix .ml -no-alias-deps -opaque -o .lovni.eobjs/native/lovni.cmx -c -impl lovni.ml)
-$ (cd _build/default && /bin/ocamlopt.opt -g -o lovni.exe .lovni.eobjs/native/ast.cmx .lovni.eobjs/native/parser.cmx .lovni.eobjs/native/lexer.cmx .lovni.eobjs/native/lovni.cmx)
