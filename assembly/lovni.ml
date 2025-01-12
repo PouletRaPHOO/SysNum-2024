@@ -119,15 +119,15 @@ let () =
       | Bexpr(exp)::q -> Printf.fprintf oc "%s\n" (match exp with
           | Enoop ->
             "00000000000000000000000000000000"
-          | Ebinop(b,i1,i2) -> (find_binop_type b)^(find_binop_code b)^(int_to_binary 4 i1)^(int_to_binary 20 i2)
+          | Ebinop(b,i1,i2) -> (find_binop_type b)^(find_binop_code b)^(int_to_binary 4 i1)^(int_to_binary 4 i2)^"0000000000000000"
           | Eunop(u,i1) ->
             "0011"^(find_unop_code u)^(int_to_binary 4 i1)^"00000000000000000000"
           | Emovi(i1,i2) ->
             "01110001"^(int_to_binary 4 i1)^(int_to_binary 20 i2)
           | Emov(i1,i2) ->
-            "01100001"^(int_to_binary 4 i1)^(int_to_binary 20 i2)
+            "01100001"^(int_to_binary 4 i1)^(int_to_binary 4 i2)^"0000000000000000"
           | Ecmp(i1,i2) ->
-            "10000001"^(int_to_binary 4 i1)^(int_to_binary 20 i2)
+            "10000001"^(int_to_binary 4 i1)^(int_to_binary 4 i2)^"0000000000000000"
           | Ejump(j,i) -> let line = Env.find i env_label in
             "0100"^(find_jump_code j)^"0000"^(int_to_binary 20 line)
           |Eloadfin(i1,i2) ->
@@ -135,9 +135,9 @@ let () =
           |Estorefin(i1,i2) ->
            "01010100"^(int_to_binary 4 i2)^(int_to_binary 20 i1)
           |Estorereg(i1,i2) ->
-           "01010010"^(int_to_binary 4 i2)^(int_to_binary 20 i1)
+           "01010010"^(int_to_binary 4 i2)^(int_to_binary 4 i1)^"0000000000000000"
           |Eloadreg(i1,i2) ->
-           "01010001"^(int_to_binary 4 i1)^(int_to_binary 20 i2)
+           "01010001"^(int_to_binary 4 i1)^(int_to_binary 4 i2)^"0000000000000000"
           | _ -> assert false
 
 
