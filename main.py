@@ -131,7 +131,7 @@ def main():
     reg4_temp.set_as_output("jour")
     reg5_temp.set_as_output("semaine")
     reg6_temp.set_as_output("mois")
-    reg7_temp.set_as_output("année")
+    reg7_temp.set_as_output("annee")
     # reg8_temp.set_as_output("bissextile")
     # reg9_temp.set_as_output("regi9")
     # reg10_temp.set_as_output("regi10")

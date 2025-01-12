@@ -6,7 +6,7 @@ all:
 
 run:
 	rm -f roms/actual_op
-	./lovni.exe test.lv
+	./lovni.exe clock.lv
 
 explain:
 	menhir --base /tmp/parser --dump --explain parser.mly

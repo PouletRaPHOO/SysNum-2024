@@ -22,6 +22,7 @@
      "SRL", SRL;
      "CMP", CMP;
      "JMP", JMP;
+     "JE", JE;
      "JNE", JNE;
      "JGE", JGE;
      "NOOP", NOOP;
@@ -33,7 +34,7 @@
         let h = Hashtbl.create 9 in
         List.iter (fun (s,t) -> Hashtbl.add h s t) kwd_tbl;
         fun s ->
-             try Hashtbl.find h s with _ -> raise (Lexing_error ("Opération non reconnue"))
+             try Hashtbl.find h s with _ -> raise (Lexing_error ("Opération non reconnue : "^s))
 
 
     (* Code récupéré depuis Stack Overflow https://stackoverflow.com/questions/9863036/ocaml-function-parameter-pattern-matching-for-strings *)
@@ -76,8 +77,8 @@ let digit =  ['0'-'9']
 let register = '%''r' digit+
 let entier = '$' '-'? digit+
 let instr = upper+
-let label = lower+digit*':'
-let var = lower+
+let label = lower+(upper lower+)* digit*':'
+let var = lower+(upper lower+)* digit*
 
 let space = ' ' | '\t'
 

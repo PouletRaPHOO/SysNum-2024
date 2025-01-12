@@ -11,6 +11,24 @@
 // r10 : vaut 100 pour incrémenter les secondes
 // r11 : vaut 60 pour les secondes / minutes
 
+// setup
+MOV %r15 $0;
+MOV %r1 %r15;
+MOV %r15 $0;
+MOV %r2 %r15;
+MOV %r15 $0;
+MOV %r3 %r15;
+MOV %r15 $0;
+MOV %r4 %r15;
+MOV %r15 $0;
+MOV %r5 %r15;
+MOV %r15 $0;
+MOV %r6 %r15;
+MOV %r15 $0;
+MOV %r7 %r15;
+MOV %r15 $0; // Attention regarder la def de r8
+MOV %r8 %r15;
+
 MOV %r9 $1;
 MOV %r10 $100;
 MOV %r11 $60;
@@ -191,4 +209,5 @@ ADD %r7 %r9;
 ADD %r8 %r9;
 MOV %r12 $65536; 
 ADD %r8 %r12;
+JMP inc;
 
