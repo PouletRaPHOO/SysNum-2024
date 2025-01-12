@@ -34,28 +34,27 @@ def Alu(is_ari, is_bool, is_cmp, unary, add_code, arg1, arg2):
 
     ari_mux_val = Mux(e1, s_add, Mux(e2, s_sub, s_mul))
     ari_mux_of = Mux(e1, c_add, Mux(e2, c_sub, c_mul))
-    ari_mux_zf = Mux(e1, is_zero(s_add), Mux(e2, is_zero(s_sub), is_zero(s_mul)))
-    ari_mux_sf = Mux(e1, s_add[0], Mux(e2, s_sub[0], s_mul[0]))
 
     bool_mux_val = Mux(e1, r_and, Mux(e2, r_or, r_xor))
     bool_mux_of = Mux(e1, of_and, Mux(e2, of_or, of_xor))
-    bool_mux_zf = Mux(e1, is_zero(r_and), Mux(e2, is_zero(r_or), is_zero(r_xor)))
-    bool_mux_sf = Mux(e1, r_and[0], Mux(e2, r_or[0], r_xor[0]))
 
     cmp_val = s_cmp
     cmp_of = c_cmp
-    cmp_zf = is_zero(cmp_val)
-    cmp_sf = cmp_val[0]
 
     unary_mux_val = Mux(e1, not_arg, Mux(e2, srl_arg, sll_arg))
     unary_mux_of = Mux(e1, Constant("0"), Mux(e2, Constant("0"), of_sll))
-    unary_mux_zf = Mux(e1, is_zero(not_arg), Mux(e2, is_zero(srl_arg), is_zero(sll_arg)))
-    unary_mux_sf = Mux(e1, not_arg[0], Mux(e2, srl_arg[0], sll_arg[0]))
 
-    return (Mux(is_ari, ari_mux_val, Mux(is_bool, bool_mux_val, Mux(is_cmp, cmp_val, unary_mux_val))),
+    val_final = Mux(is_ari, ari_mux_val, Mux(is_bool, bool_mux_val, Mux(is_cmp, cmp_val, unary_mux_val)))
+    zf_final = is_zero(val_final)
+    sf_final = val_final[0]
+
+    return (val_final,
             Mux(is_ari, ari_mux_of, Mux(is_bool, bool_mux_of, Mux(is_cmp, cmp_of, unary_mux_of))),
-            Mux(is_ari, ari_mux_zf, Mux(is_bool, bool_mux_zf, Mux(is_cmp, cmp_zf, unary_mux_zf))),
-            Mux(is_ari, ari_mux_sf, Mux(is_bool, bool_mux_sf, Mux(is_cmp, cmp_sf, unary_mux_sf))))
+            zf_final,
+            sf_final)
+
+
+
 
     # _,is_add,is_sub,is_mul,_,_,_,_,_,_,_,_,_,_,_,_ = mux4(add_code)
     # if is_add & is_ari:
