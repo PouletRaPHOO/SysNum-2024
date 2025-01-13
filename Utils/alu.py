@@ -11,7 +11,7 @@ def Alu(is_ari, is_bool, is_cmp, unary, add_code, arg1, arg2):
 
     s_op, c_op = n_adder(arg1, reel_arg2)
     s_mul, c_mul = Constant("0"*32), bit0
-#     temp_mul, ctemp_mul = arg2, Constant("0")
+    # temp_mul, ctemp_mul = arg2, Constant("0")
     # for i in range(32):
     #     ctemp_mul, temp_mul = sll(temp_mul)
     #     c_mul = Or(c_mul, ctemp_mul)

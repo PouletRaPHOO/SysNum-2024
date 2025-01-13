@@ -107,7 +107,7 @@ def main():
         c1, #jmp
         And(c2, Not(ZF)), #Jne
         And(c3, ZF), #Jge
-        And(c4, Xor(SF,OF)) #TODO ATTENTION c'est très possible que ça fasse pas ce qu'on veuille
+        And(c4, Not(Xor(SF,OF))) #TODO ATTENTION c'est très possible que ça fasse pas ce qu'on veuille
     ))
 
     p_temp = Mux(is_really_jumping, Slice( 16,32, arg2), n_p)
