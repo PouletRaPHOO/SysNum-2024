@@ -1,6 +1,8 @@
 let print_only = ref false
 let number_steps = ref (-1)
 let base_ten = ref false
+let per_sec = ref false
+let curr_sec = ref true
 
 open Printf
 open Netlist_ast
@@ -180,7 +182,7 @@ let pretty_print v ident = if !base_ten then
   match v with
   | VBit b -> Printf.printf "=> %s = %d\n" ident (Obj.magic b)
   | VBitArray a -> Printf.printf "=> %s = " ident; 
-      Printf.printf "%d\n" (Array.fold_left (fun i b -> 2 * i + (Obj.magic b)) 0 a)
+      Printf.printf "%d\n" ((Array.fold_left (fun i b -> 2 * i + (Obj.magic b)) 0 a) + 1) (*+1 pour eviter que janvier commence par le 0e jour - attention a ce que ça soit chiant nulle part*)
   else match v with
   | VBit b -> Printf.printf "=> %s = %d\n" ident (Obj.magic b)
   | VBitArray a -> Printf.printf "=> %s = " ident; Array.iter (fun x->
@@ -261,7 +263,13 @@ let simulator program number_steps =
                 failwith "Mauvais taille d'argument de RAM") in
         if iobool then (Env.find i rams).(int_of_array warr) <- datarr
       )  li;
-    List.iter (fun x-> pretty_print (Env.find x !e) x) program.p_outputs
+    if !per_sec then try
+      (match Env.find "sec" !e with
+        |VBitArray a -> if a.(31) != !curr_sec then 
+          (curr_sec := not !curr_sec;       List.iter (fun x-> pretty_print (Env.find x !e) x) program.p_outputs)
+        | _ -> failwith "oups")
+      with _ -> per_sec := false; List.iter (fun x-> pretty_print (Env.find x !e) x) program.p_outputs
+    else List.iter (fun x-> pretty_print (Env.find x !e) x) program.p_outputs
   done
 
 
@@ -280,7 +288,7 @@ let compile filename =
 
 let main () =
   Arg.parse
-    ["-n", Arg.Set_int number_steps, "Number of steps to simulate"; "-ten", Arg.Set base_ten, "Print the results in base 10"]
+    ["-n", Arg.Set_int number_steps, "Number of steps to simulate"; "-ten", Arg.Set base_ten, "Print the results in base 10"; "-sec", Arg.Set per_sec, "Only print every time a (clock) second passes"]
     compile
     ""
 ;;

@@ -24,9 +24,9 @@ MOV %r15 $0;
 MOV %r5 %r15;
 MOV %r15 $0;
 MOV %r6 %r15;
-MOV %r15 $0;
+MOV %r15 $1969;
 MOV %r7 %r15;
-MOV %r15 $0; // Attention regarder la def de r8
+MOV %r15 $24248390; // Attention regarder la def de r8 - je crois c'est la bonne valeur pour 1970. a verif/ a ameliorer avec mul??
 MOV %r8 %r15;
 
 MOV %r9 $1;
