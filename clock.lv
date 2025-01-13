@@ -1,0 +1,214 @@
+// r0 : temps brut
+// r1 : secondes
+// r2 : minutes
+// r3 : heures
+// r4 : jours
+// r5 : semaine
+// r6 : mois
+// r7 : année
+// r8 : compte les 100 sur les 7 derniers bits et les 400 sur les 15e et 16e bits
+// r9 : vaut 1 pour les incrémentations
+// r10 : vaut 100 pour incrémenter les secondes
+// r11 : vaut 60 pour les secondes / minutes
+
+// setup
+MOV %r15 $0;
+MOV %r1 %r15;
+MOV %r15 $0;
+MOV %r2 %r15;
+MOV %r15 $0;
+MOV %r3 %r15;
+MOV %r15 $1;
+MOV %r4 %r15;
+MOV %r15 $1;
+MOV %r5 %r15;
+MOV %r15 $1;
+MOV %r6 %r15;
+MOV %r15 $1970;
+MOV %r7 %r15;
+MOV %r15 $24248390; // Attention regarder la def de r8 - je crois c'est la bonne valeur pour 1970. a verif/ a ameliorer avec mul??
+MOV %r8 %r15;
+
+MOV %r9 $1;
+MOV %r10 $140;
+MOV %r11 $60;
+
+inc:
+ADD %r0 %r9;
+CMP %r0 %r10;
+JNE inc;
+MOV %r0 $0; // remise à 0 du temps brut
+ADD %r1 %r9;
+CMP %r1 %r11;
+JNE inc;
+
+MOV %r1 $0; // remise à 0 des secondes
+ADD %r2 %r9;
+CMP %r2 %r11;
+JNE inc;
+
+MOV %r2 $0; // ...
+MOV %r12 $24;
+ADD %r3 %r9;
+CMP %r3 %r12;
+JNE inc;
+
+MOV %r3 $0;
+MOV %r12 $7;
+ADD %r4 %r9;
+ADD %r5 %r9;
+CMP %r5 %r12;
+JNE nextDay;
+
+MOV %r5 $0; // si on est en fin de semaine
+
+nextDay:
+MOV %r12 $1; // janvier
+CMP %r12 %r6;
+JE longMonth;
+MOV %r12 $2; // février
+CMP %r12 %r6;
+JE february;
+MOV %r12 $3; // mars
+CMP %r12 %r6;
+JE longMonth;
+MOV %r12 $4; // avril
+CMP %r12 %r6;
+JE shortMonth;
+MOV %r12 $5; // mai
+CMP %r12 %r6;
+JE longMonth;
+MOV %r12 $6; // juin
+CMP %r12 %r6;
+JE shortMonth;
+MOV %r12 $7; // juillet
+CMP %r12 %r6;
+JE longMonth;
+MOV %r12 $8; // août
+CMP %r12 %r6;
+JE longMonth;
+MOV %r12 $9; // septembre
+CMP %r12 %r6;
+JE shortMonth;
+MOV %r12 $10; // octobre
+CMP %r12 %r6;
+JE longMonth;
+MOV %r12 $11; // novembre
+CMP %r12 %r6;
+JE shortMonth;
+MOV %r12 $12; // décembre
+CMP %r12 %r6;
+
+february:  // février
+MOV %r13 %r7;
+SLL %r13; // décalage pour vérifier la divisibilité par 4
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+JNE twentyEight;
+
+MOV %r13 %r8; // multiplicité par 100
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+SLL %r13;
+MOV %r14 $6553600;
+CMP %r13 %r14;
+JNE bissextile;
+
+MOV %r12 $100; // multiplicité par 400
+SUB %r8 %r12;
+MOV %r13 %r8;
+SRL %r13;
+SRL %r13;
+SRL %r13;
+SRL %r13;
+SRL %r13;
+SRL %r13;
+SRL %r13;
+SRL %r13;
+SRL %r13;
+SRL %r13;
+SRL %r13;
+SRL %r13;
+SRL %r13;
+SRL %r13;
+SRL %r13;
+SRL %r13;
+MOV %r14 $400;
+CMP %r13 %r14;
+JE fourHundred;
+
+twentyEight:
+MOV %r12 $29;
+CMP %r12 %r6;
+JE nextMonth;
+
+fourHundred:
+MOV %r8 $0;
+bissextile:
+MOV %r12 $30;
+CMP %r12 %r6;
+JE nextMonth;
+
+shortMonth: // mois de 30 jours
+MOV %r12 $31;
+CMP %r4 %r12;
+JE nextMonth;
+
+longMonth:     // mois de 31 jours
+MOV %r12 $32;
+CMP %r4 %r12;
+JNE inc;
+
+nextMonth:
+ADD %r6 %r9;
+MOV %r12 $13;
+MOV %r4 $1;
+CMP %r12 %r6;
+JNE inc;
+MOV %r6 $1;
+ADD %r7 %r9;
+ADD %r8 %r9;
+MOV %r12 $65536; 
+ADD %r8 %r12;
+JMP inc;
+

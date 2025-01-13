@@ -182,7 +182,7 @@ let pretty_print v ident = if !base_ten then
   match v with
   | VBit b -> Printf.printf "=> %s = %d\n" ident (Obj.magic b)
   | VBitArray a -> Printf.printf "=> %s = " ident; 
-      Printf.printf "%d\n" ((Array.fold_left (fun i b -> 2 * i + (Obj.magic b)) 0 a) + 1) (*+1 pour eviter que janvier commence par le 0e jour - attention a ce que ça soit chiant nulle part*)
+      Printf.printf "%d\n" ((Array.fold_left (fun i b -> 2 * i + (Obj.magic b)) 0 a))
   else match v with
   | VBit b -> Printf.printf "=> %s = %d\n" ident (Obj.magic b)
   | VBitArray a -> Printf.printf "=> %s = " ident; Array.iter (fun x->
