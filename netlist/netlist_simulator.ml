@@ -1,5 +1,6 @@
 let print_only = ref false
 let number_steps = ref (-1)
+let base_ten = ref false
 
 open Printf
 open Netlist_ast
@@ -175,7 +176,12 @@ let call_op env op perm (rams:bool array array Netlist_ast.Env.t) roms=
         | Aconst valu -> select i1 valu) env
 
 
-let pretty_print v ident= match v with
+let pretty_print v ident = if !base_ten then 
+  match v with
+  | VBit b -> Printf.printf "=> %s = %d\n" ident (Obj.magic b)
+  | VBitArray a -> Printf.printf "=> %s = " ident; 
+      Printf.printf "%d\n" (Array.fold_left (fun x b -> 2 * x + (Obj.magic b)) 0 a)
+  else match v with
   | VBit b -> Printf.printf "=> %s = %d\n" ident (Obj.magic b)
   | VBitArray a -> Printf.printf "=> %s = " ident; Array.iter (fun x->
       Printf.printf "%d" (Obj.magic x)) a; Printf.printf "\n"
@@ -274,7 +280,7 @@ let compile filename =
 
 let main () =
   Arg.parse
-    ["-n", Arg.Set_int number_steps, "Number of steps to simulate"]
+    ["-n", Arg.Set_int number_steps, "Number of steps to simulate"; "-ten", Arg.Set base_ten, "Print the results in base 10"]
     compile
     ""
 ;;
