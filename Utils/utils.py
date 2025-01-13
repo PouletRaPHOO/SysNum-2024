@@ -59,10 +59,9 @@ def oppose(a):
     return s
 
 def sll(a):
-    c = Constant("0")
-    a, ctemp = n_adder(a, a)
-    c = c | ctemp
-    return (c, a)
+    big = Concat(a, Constant("0"))
+    c = big[0]
+    return (c, Slice(1, big.bus_size, big))
 
 def srl(a):
     return Slice(0, a.bus_size, Mux(a[0], Concat(Constant("1"), a), Concat(Constant("0"), a)))

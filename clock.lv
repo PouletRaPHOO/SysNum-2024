@@ -179,14 +179,16 @@ JE fourHundred;
 
 twentyEight:
 MOV %r12 $29;
-CMP %r12 %r6;
+CMP %r12 %r4;
 JE nextMonth;
+JMP inc;
 
 fourHundred:
 MOV %r8 $0;
+
 bissextile:
 MOV %r12 $30;
-CMP %r12 %r6;
+CMP %r12 %r4;
 JE nextMonth;
 
 shortMonth: // mois de 30 jours
