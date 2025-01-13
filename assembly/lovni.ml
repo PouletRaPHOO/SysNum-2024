@@ -70,7 +70,11 @@ let () =
           ) else (
             let ei1,ei2,li = premier_passage (compteur+1) (l+1) n e1 (Env.add i compteur e2) q in
             ei1,ei2, (Bexpr(Estorefin(compteur,re)))::li
-          )
+                                  )
+        | Bexpr(Emovpoint(i1,s)) -> if Env.mem s e2 then (
+                   let ei1,ei2,li = premier_passage (compteur) (l+1) n e1 e2 q in
+                   ei1,ei2,(Bexpr(Emovi(i1,Env.find s e2)))::li
+                                    ) else failwith ("Variable non définie : "^s)
         | _ as a -> let ei1,ei2, li = premier_passage compteur (l+1) n e1 e2 q in ei1,ei2,a::li
       )
     in

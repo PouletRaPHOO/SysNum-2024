@@ -7,6 +7,8 @@
 %}
 
 /* Déclaration des tokens */
+
+%token <string> POINT
 %token <int> CST
 %token <string> VAR
 %token <string> LABEL
@@ -45,6 +47,7 @@ exp:
     | b=binop i1 = REG i2 = REG {Ebinop(b,i1,i2)}
     | u=unop i1= REG {Eunop(u,i1)}
     | MOV i1 = REG i2 = REG {Emov(i1,i2)}
+    | MOV i1 = REG s = POINT {Emovpoint(i1,s)}
     | MOV i1 = REG i2= CST {Emovi (i1,i2)}
     | MOV i1 = REG i=VAR {Eload(i1,i)}
     | MOV i1 = VAR i2 = REG {Estore(i1,i2)}

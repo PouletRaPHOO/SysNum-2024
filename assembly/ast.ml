@@ -17,6 +17,7 @@ type jump = Jmp | Jge | Jne | Je
 
 type bexpr =
   | Enoop
+  | Decla of ident*int
   | Ebinop of binop*int*int
   | Eunop of unop*int
   | Emovi of int*int
@@ -29,7 +30,7 @@ type bexpr =
   | Estorefin of int*int
   | Estorereg of int*int
   | Eloadreg of int*int
-
+  | Emovpoint of int*string
 
 
 type expr =

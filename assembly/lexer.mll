@@ -59,6 +59,10 @@
       | '$'::a -> int_of_string (implode a)
       | _ -> failwith "pas normal"
 
+    let decode_point r : string= match explode r with
+      | '*'::a -> (implode a)
+      | _ -> failwith "pas normal"
+
     let decode_reg r : int= match explode r with
       | '%'::'r'::a -> int_of_string (implode a)
       | _ -> failwith "pas normal"
@@ -68,19 +72,42 @@
         | [':'] -> []
         | a::t-> a::(decode_label t)
 
+
+    let rec decode_decla1 = function
+        | [] ->  failwith "pas normal"
+        | '['::l -> [],l
+        | a::t-> a::(decode_label t)
+
+    let rec decode_decla2 = function
+        | [] ->  failwith "pas normal"
+        | [']'] -> []
+        | a::t-> a::(decode_label t)
+
+    let decode_decla d =
+      let a1,a2 = decode_decla1 (explode d) in
+      let e1 = implode (decode_decla2 a2) in
+      (implode a1, int_of_string e1)
+
+
+
+
 }
 
 
 let lower = ['a' - 'z']
 let upper = ['A' - 'Z']
 let digit =  ['0'-'9']
+
 let register = '%''r' digit+
 let entier = '$' '-'? digit+
 let instr = upper+
 let label = lower+(upper lower+)* digit*':'
-let var = lower+(upper lower+)* digit*
+let var = lower+(upper lower+)*
+let pointer = "*"var
+let decltabl = var '[' digit+ ']'
 
 let space = ' ' | '\t'
+
 
 
 rule token = parse
@@ -94,6 +121,7 @@ rule token = parse
     | register as r {REG (decode_reg r)}
     | instr as i  {id_or_kwd i}
     | entier as e {CST (decode_int e)}
+    | pointer as p {POINT (decode_point p)}
     | eof  { EOF }
     | _ { raise (Lexing_error ("opérande non reconnue"))  }
 
