@@ -3,6 +3,8 @@ let number_steps = ref (-1)
 let base_ten = ref false
 let per_sec = ref false
 let curr_sec = ref true
+let print_well = ref false
+let tab_print = Array.make 7 0
 
 open Printf
 open Netlist_ast
@@ -177,12 +179,62 @@ let call_op env op perm (rams:bool array array Netlist_ast.Env.t) roms=
         | Avar inde -> select i1 (Env.find inde env)
         | Aconst valu -> select i1 valu) env
 
+let int_to_month i =
+  if i = 1 then "janvier"
+  else if i = 2 then "février"
+  else if i = 3 then "mars"
+  else if i = 4 then "avril"
+  else if i = 5 then "mai"
+  else if i = 6 then "juin"
+  else if i = 7 then "juillet"
+  else if i = 8 then "août"
+  else if i = 9 then "septembre"
+  else if i = 10 then "octobre"
+  else if i = 11 then "novembre"
+  else "décembre"
 
-let pretty_print v ident = if !base_ten then 
+let int_to_day i =
+  if i = 1 then "lundi"
+  else if i = 2 then "mardi"
+  else if i = 3 then "mercredi"
+  else if i = 4 then "jeudi"
+  else if i = 5 then "vendredi"
+  else if i = 6 then "samedi"
+  else "dimanche"
+
+let effectively_print n =
+  let month = int_to_month tab_print.(5) in
+  let sec = tab_print.(0) in
+  let minute = tab_print.(1) in
+  let hr = tab_print.(2) in
+  let n_day = tab_print.(3) in
+  let day_week = int_to_day tab_print.(4) in
+  let year = tab_print.(6) in
+  Printf.printf "Nous sommes le %s %d %s %d, il est %d:%d:%d\n %!" day_week n_day month year hr minute sec 
+
+let pretty_print v ident = if !base_ten then begin
+  if !print_well then begin(
+    match v with
+    | VBit b -> ()
+    | VBitArray a -> if ident = "annee" then (
+      tab_print.(6) <- ((Array.fold_left (fun i b -> 2 * i + (Obj.magic b)) 0 a));
+      effectively_print 0)
+  else if ident = "mois" then
+    tab_print.(5) <- ((Array.fold_left (fun i b -> 2 * i + (Obj.magic b)) 0 a))
+  else if ident = "semaine" then
+    tab_print.(4) <- ((Array.fold_left (fun i b -> 2 * i + (Obj.magic b)) 0 a))
+  else if ident = "jour" then
+    tab_print.(3) <- ((Array.fold_left (fun i b -> 2 * i + (Obj.magic b)) 0 a))
+  else if ident = "hr" then
+    tab_print.(2) <- ((Array.fold_left (fun i b -> 2 * i + (Obj.magic b)) 0 a))
+  else if ident = "min" then
+    tab_print.(1) <- ((Array.fold_left (fun i b -> 2 * i + (Obj.magic b)) 0 a))
+  else 
+    tab_print.(0) <- ((Array.fold_left (fun i b -> 2 * i + (Obj.magic b)) 0 a))) end else
   match v with
   | VBit b -> Printf.printf "=> %s = %d\n" ident (Obj.magic b)
   | VBitArray a -> Printf.printf "=> %s = " ident; 
-      Printf.printf "%d\n" ((Array.fold_left (fun i b -> 2 * i + (Obj.magic b)) 0 a))
+      Printf.printf "%d\n" ((Array.fold_left (fun i b -> 2 * i + (Obj.magic b)) 0 a)) end
   else match v with
   | VBit b -> Printf.printf "=> %s = %d\n" ident (Obj.magic b)
   | VBitArray a -> Printf.printf "=> %s = " ident; Array.iter (fun x->
@@ -240,7 +292,7 @@ let simulator program number_steps =
   
 
   while not (!i = number_steps) do
-    if !i mod 100 = 0 then Printf.printf "Etape n°%d\n %!" (!i+1);
+    (* Printf.printf "Etape n°%d\n %!" (!i+1); *)
     e := read_input program.p_vars program.p_inputs !e;
     e := List.fold_left (fun acc op ->
         call_op acc op !e rams roms) !e program.p_eqs;
@@ -288,7 +340,7 @@ let compile filename =
 
 let main () =
   Arg.parse
-    ["-n", Arg.Set_int number_steps, "Number of steps to simulate"; "-ten", Arg.Set base_ten, "Print the results in base 10"; "-sec", Arg.Set per_sec, "Only print every time a (clock) second passes"]
+    ["-n", Arg.Set_int number_steps, "Number of steps to simulate"; "-ten", Arg.Set base_ten, "Print the results in base 10"; "-sec", Arg.Set per_sec, "Only print every time a (clock) second passes"; "-clock", Arg.Set print_well, "Beautiful print for a clock"]
     compile
     ""
 ;;

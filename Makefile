@@ -22,8 +22,7 @@ test:
 compil_sim:
 	cd netlist; \
 	rm -f netlist_simulator.byte; \
-	ocamlbuild netlist_simulator.byte; \
-	cd ..
+	ocamlbuild netlist_simulator.byte
 
 compil_clock:
 	./assembly/lovni.exe clock.lv
@@ -36,5 +35,5 @@ run:
 	make compil_sim
 	make compil_clock
 	make compil_netlist
-	./netlist/netlist_simulator.byte -ten -sec main.net
+	./netlist/netlist_simulator.byte -ten -sec -clock main.net
 # end
