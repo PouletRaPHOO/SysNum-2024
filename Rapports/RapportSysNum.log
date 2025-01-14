@@ -1,12 +1,12 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.3.20)  14 JAN 2025 06:04
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.3.20)  14 JAN 2025 08:07
 entering extended mode
  restricted \write18 enabled.
+ file:line:error style messages enabled.
  %&-line parsing enabled.
-**RapportSysNum.tex
-(./RapportSysNum.tex
+**/users/24/info/bhornero/Documents/Info/sysnum/SysNum-2024/Rapports/RapportSysNum.tex
+(/users/24/info/bhornero/Documents/Info/sysnum/SysNum-2024/Rapports/RapportSysNum.tex
 LaTeX2e <2021-11-15> patch level 1
-L3 programming layer <2022-01-21>
-(/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
+L3 programming layer <2022-01-21> (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2021/10/04 v1.4n Standard LaTeX document class
 (/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
 File: size10.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
@@ -22,18 +22,14 @@ File: size10.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
 \abovecaptionskip=\skip47
 \belowcaptionskip=\skip48
 \bibindent=\dimen138
-)
-(/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
+) (/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
-
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
+ (/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks16
-)
-(/usr/share/texlive/texmf-dist/tex/generic/iftex/ifvtex.sty
+) (/usr/share/texlive/texmf-dist/tex/generic/iftex/ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
-
-(/usr/share/texlive/texmf-dist/tex/generic/iftex/iftex.sty
+ (/usr/share/texlive/texmf-dist/tex/generic/iftex/iftex.sty
 Package: iftex 2020/03/06 v1.0d TeX engine tests
 ))
 \Gm@cnth=\count193
@@ -48,13 +44,11 @@ Package: iftex 2020/03/06 v1.0d TeX engine tests
 \Gm@layouthoffset=\dimen145
 \Gm@layoutvoffset=\dimen146
 \Gm@dimlist=\toks17
-)
-(/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+) (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2022-01-12 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count196
 \l__pdf_internal_box=\box50
-)
-(./RapportSysNum.aux)
+) (./RapportSysNum.aux)
 \openout1 = `RapportSysNum.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 9.
@@ -123,16 +117,12 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 70.
 
 Overfull \hbox (58.65405pt too wide) in paragraph at lines 104--105
-[]\OT1/cmr/m/n/10 De m^eme pour ren-trer dans un in-put un \OT1/cmr/bx/n/10 VBi
-tAr-ray [][]\OT1/cmtt/m/n/10 [[]\OT1/cmr/m/n/10 false;true;false;false|]| on re
-n-tr-era [][]\OT1/cmtt/m/n/10 Valeur de a (array de taille 4): 0100 
+[]\OT1/cmr/m/n/10 De m^eme pour ren-trer dans un in-put un \OT1/cmr/bx/n/10 VBitAr-ray [][]\OT1/cmtt/m/n/10 [[]\OT1/cmr/m/n/10 false;true;false;false|]| on ren-tr-era [][]\OT1/cmtt/m/n/10 Valeur de a (array de taille 4): 0100 
  []
 
 
 Overfull \hbox (6.47447pt too wide) in paragraph at lines 114--116
-\OT1/cmr/m/n/10 l'^^Setape pr^^Sec^^Sedente (et donc n'est pas im-pact^^See par
- l'ordre de r^^Seassignation de x) - Lors d'un ap-pel [][]\OT1/cmtt/m/n/10 y = 
-RAM _ _ ra we wa data[]\OT1/cmr/m/n/10 ,
+\OT1/cmr/m/n/10 l'^^Setape pr^^Sec^^Sedente (et donc n'est pas im-pact^^See par l'ordre de r^^Seassignation de x) - Lors d'un ap-pel [][]\OT1/cmtt/m/n/10 y = RAM _ _ ra we wa data[]\OT1/cmr/m/n/10 ,
  []
 
 [2]
@@ -140,27 +130,20 @@ Overfull \hbox (22.97603pt too wide) in paragraph at lines 207--228
  [][] 
  []
 
-[3] (./RapportSysNum.aux) ) 
+[3] [4] (./RapportSysNum.aux) ) 
 Here is how much of TeX's memory you used:
- 1043 strings out of 478287
- 17551 string characters out of 5849289
- 335066 words of memory out of 5000000
- 19294 multiletter control sequences out of 15000+600000
+ 1045 strings out of 478287
+ 17758 string characters out of 5849289
+ 336066 words of memory out of 5000000
+ 19295 multiletter control sequences out of 15000+600000
  474903 words of font info for 47 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,7n,62p,354b,206s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-mi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pf
-b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr
-/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/
-texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on RapportSysNum.pdf (3 pages, 120634 bytes).
+ 55i,7n,62p,482b,206s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on RapportSysNum.pdf (4 pages, 122893 bytes).
 PDF statistics:
- 54 PDF objects out of 1000 (max. 8388607)
- 32 compressed objects within 1 object stream
+ 57 PDF objects out of 1000 (max. 8388607)
+ 34 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

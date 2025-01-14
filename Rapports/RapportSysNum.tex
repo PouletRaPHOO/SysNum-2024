@@ -228,5 +228,18 @@ alors P $\gets$ immediate\\ \hline
 
 
 \end{center}
+L'instruction MUL existe dans le code seulement sous forme de commentaire car elle n'est pas nécessaire au fonctionnement de l'horloge et ralentit grandement le processeur.
+
+\section*{Horloge}
+
+\subsection*{Principe}
+L'horloge fonctionne sans entrée. A partir de la date de départ (premier janvier 1970 à minuit par défaut), elle compte le temps. La précision de l'horloge dépends de la performance de l'ordinateur. Les années bissextiles et les jours de la semaine sont implémentés. Il y a aussi une version plus rapide, où l'horloge incrémente les secondes à la vitesse maximale.
+
+\subsection*{Précisions}
+Puisque l'horloge ne prends pas d'entrée, l'unique moyen de changer la date de départ est de modifier les valeurs directement dans le code. Le calcul des années bissextiles se fait seul, mais pas celui du jour de la semaine, qu'il faut aussi initialiser.
+
+Les différentes valeurs sont stockées dans des registres, ainsi que certaines constantes utiles (1 et 60 par exemple). Les définitions exactes de chaque registre sont précisées au début du code, sous la forme d'un commentaire.
+
+Les sorties sont les différentes valeurs nécessaires (secondes, minutes, heures, ...). Celles-ci peuvent être affichées plus proprement par le simulateur de netlist avec les options \verb|-ten -sec -clock|.
 
 \end{document}

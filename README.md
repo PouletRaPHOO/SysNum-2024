@@ -26,4 +26,4 @@ Les options sont les suivantes:
 - -n : nombre de tours
 - -ten : affiche les nombres en base 10
 - -clock : affiche sous forme compatible avec une horloge
-- -sec : affiche seulement lorsque la variable `sec` est actualisée
+- -sec : affiche seulement lorsque le 32e bit de la variable `sec` change

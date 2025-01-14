@@ -8,24 +8,23 @@
 // r7 : année
 // r8 : compte les 100 sur les 7 derniers bits et les 400 sur les 15e et 16e bits
 // r9 : vaut 1 pour les incrémentations
-// r10 : vaut 140 pour incrémenter les secondes - ici 1 pour avoir des secondes rapides
+// r10 : vaut 270 pour incrémenter les secondes
 // r11 : vaut 60 pour les secondes / minutes
 
 // setup
-MOV %r15 $0;
-MOV %r1 %r15;
-MOV %r15 $0;
-MOV %r2 %r15;
-MOV %r15 $0;
-MOV %r3 %r15;
-MOV %r15 $1;
-MOV %r4 %r15;
-MOV %r15 $1;
-MOV %r5 %r15;
-MOV %r15 $1;
-MOV %r6 %r15;
-MOV %r15 $1970;
-MOV %r7 %r15;
+MOV %r1 $0; // initialisation des secondes
+
+MOV %r2 $0; // initialisation des minutes
+
+MOV %r3 $0; // initialisation des heures
+
+MOV %r4 $1; // initialisation du jour
+
+MOV %r5 $4; // initialisation du jour de la semaine
+
+MOV %r6 $1; // initialisation du mois
+
+MOV %r7 $1970; // initialisation de l'année
 
 MOV %r15 $100;
 MOV %r13 $101;
