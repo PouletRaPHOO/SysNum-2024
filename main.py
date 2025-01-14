@@ -138,4 +138,4 @@ def main():
     # reg12_temp.set_as_output("regi12")
     # reg13_temp.set_as_output("regi13")
     # reg14_temp.set_as_output("regi14")
-    # reg15_temp.set_as_output("regi15")feur
+    # reg15_temp.set_as_output("regi15")
