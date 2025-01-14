@@ -74,7 +74,6 @@ def main():
 
     arg2_ram = Slice(16,32, Mux((c1|c2), treated_arg2, arg2_et))
 
-
     raminho = RAM(16,32,arg2_ram,is_load_needed,arg2_ram, treated_arg2)
     # add_size, word_size, read_add, write_enable, write_addr, data
 

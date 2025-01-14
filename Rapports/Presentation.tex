@@ -1,11 +1,103 @@
 \documentclass{beamer}
 
-\title{Présentation Sysnum}
+\title{Présentation Systèmes Numériques}
 \date{14 janvier 2025}
 \author{HERZLICH Raphaël, HELARY Axel, HORNERO Baptiste}
 
 \begin{document}
 
     \frame{\titlepage}
+
+    \begin{frame}{Sommaire}
+        \tableofcontents[hideallsubsections]
+    \end{frame}
+
+
+\section{Principe général}
+    \begin{frame}
+        \tableofcontents[currentsection, hideothersubsections]
+    \end{frame}
+
+    \subsection{Architecture}
+    \begin{frame}{Architecture}
+        On implémente:
+        \begin{itemize}
+            \item 16 registres de taille 32
+            \item P qui donne la position du pointeur sur la ROM
+            \item ZF, SF, OF trois flags de taille 1
+        \end{itemize}
+    \end{frame}
+
+    \subsection{Jeu d'instruction}
+    \begin{frame}{Jeu d'instruction}
+
+        \begin{tabular}{| c || c || c | c |}
+            Instruction & Encodage & Description & Arguments\\ \hline
+            NOP & 0000 0000 & No opération &\\ \hline
+            ADD & 0000 0001 & Addition & rs1 rs2\\ \hline
+            SUB & 0000 0010 & Soustraction & rs1 rs2 \\ \hline
+            MUL & 0000 0011 & Multiplication & rs1 rs2 \\ \hline
+            AND & 0000 0100 & Et logique & rs1 rs2\\ \hline
+            NOT & 0000 0101 & Non & rs1\\ \hline
+            OR  & 0000 0110 & Ou logique & rs1 rs2\\ \hline
+            XOR & 0000 0111 & Xor logique & rs1 rs2\\ \hline
+            SLL & 0000 1000 & Décalage gauche logique & rs1 \\ \hline
+            SRL & 0000 1001 & Décalage droite logique & rs1\\ \hline
+        \end{tabular}
+    \end{frame}
+
+    \begin{frame}{Jeu d'instruction}
+
+        \begin{center}
+        \begin{tabular}{| c || c | c |}
+            Instruction & Encodage & Description formelle \\ \hline
+            MOV   & 0000 1010 & rs1 $\gets$ rs2\\ \hline
+            MOVI  & 0000 1011 & rs1 $\gets$ immediate\\\hline
+            JMP   & 0000 1100 & P $\gets$ immediate\\ \hline
+            CMP   & 0000 1101 & \\ \hline
+            JE    & 0000 1110 &  Si ZF = 1 alors P $\gets$ immediate \\ \hline
+            JNE   & 0000 1111 & Si ZF =0 alors P$\gets$ immediate\\ \hline
+            JGE   & 0001 0000 & Si OF=SF alors P $\gets$ immediate\\ \hline
+            LOAD  & 0001 0001 & rs1 $\gets$ R[rs2]\\ \hline
+            STORE & 0001 0010 & R[rs2] $\gets$ rs1\\ \hline
+            LOADFIX  & 0001 0001 & rs1 $\gets$ R[immediate]\\ \hline
+            STOREFIX & 0001 0010 & R[immediate] $\gets$ rs1\\ \hline
+        \end{tabular}
+    \end{center}
+
+    \end{frame}
+
+\section{Assembleur}
+    \begin{frame}
+        \tableofcontents[currentsection, hideothersubsections]
+    \end{frame}
+\section{Horloge}
+    \begin{frame}
+        \tableofcontents[currentsection, hideothersubsections]
+    \end{frame}
+
+\subsection{Utilité}
+
+\begin{frame}{Ce que l'on fait}
+    Notre horloge permet de:
+    \begin{itemize}
+        \item passer les secondes, les minutes, les heures, les jours, les jours de la semaine, les mois et les années
+        \item détecter les années bissextiles et de modifier le nombre de jours de février en conséquence
+        \item choisir la date de début
+    \end{itemize}
+
+    Notre horloge débutera à l'année 1970.
+\end{frame}
+
+\begin{frame}{Les problèmes}
+    Nous avons rencontré les problèmes suivants:
+    \begin{itemize}
+        \item Netlist trop grande en utilisant des boucles for
+        \item Netlist trop grande à cause des multiplications
+        \item Implémentation peu efficace de SLL 
+    \end{itemize}
+\end{frame}
+
+\subsection{Spécificité}
 
 \end{document}
