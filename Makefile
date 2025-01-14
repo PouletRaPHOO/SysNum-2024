@@ -27,6 +27,9 @@ compil_sim:
 compil_clock:
 	./assembly/lovni.exe clock.lv
 
+compil_clock_fast:
+	./assembly/lovni.exe clockfast.lv
+
 compil_netlist:
 	rm -f main.net
 	python3 carotte.py/carotte.py main.py > main.net
@@ -34,6 +37,12 @@ compil_netlist:
 run:
 	make compil_sim
 	make compil_clock
+	make compil_netlist
+	./netlist/netlist_simulator.byte -ten -sec -clock main.net
+
+runfast:
+	make compil_sim
+	make compil_clock_fast
 	make compil_netlist
 	./netlist/netlist_simulator.byte -ten -sec -clock main.net
 # end
