@@ -2,7 +2,7 @@ let print_only = ref false
 let number_steps = ref (-1)
 let base_ten = ref false
 let per_sec = ref false
-let curr_sec = ref true
+let curr_sec = ref false
 let print_well = ref false
 let tab_print = Array.make 7 0
 
