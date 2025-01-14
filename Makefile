@@ -5,7 +5,6 @@
 # @version 1.0
 
 main:
-	ocamlbuild netlist/scheduler_test.byte
 	ocamlbuild netlist/netlist_simulator.byte
 
 schedule :
