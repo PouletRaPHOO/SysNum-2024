@@ -103,7 +103,7 @@ let register = '%''r' digit+
 let entier = '$' '-'? digit+
 let instr = upper+
 let var = lower+(upper lower+)* digit*
-let label = var':'
+let label = var ':'
 let pointer = "*"var
 let decltabl = var '[' digit+ ']'
 
