@@ -34,15 +34,15 @@
         \begin{tabular}{| c || c || c | c |}
             Instruction & Encodage & Description & Arguments\\ \hline
             NOP & 0000 0000 & No opération &\\ \hline
-            ADD & 0000 0001 & Addition & rs1 rs2\\ \hline
-            SUB & 0000 0010 & Soustraction & rs1 rs2 \\ \hline
-            MUL & 0000 0011 & Multiplication & rs1 rs2 \\ \hline
-            AND & 0000 0100 & Et logique & rs1 rs2\\ \hline
-            NOT & 0000 0101 & Non & rs1\\ \hline
-            OR  & 0000 0110 & Ou logique & rs1 rs2\\ \hline
-            XOR & 0000 0111 & Xor logique & rs1 rs2\\ \hline
-            SLL & 0000 1000 & Décalage gauche logique & rs1 \\ \hline
-            SRL & 0000 1001 & Décalage droite logique & rs1\\ \hline
+            ADD & 0001 0001 & Addition & rs1 rs2\\ \hline
+            SUB & 0001 0010 & Soustraction & rs1 rs2 \\ \hline
+            MUL & 0001 0011 & Multiplication & rs1 rs2 \\ \hline
+            AND & 0010 0001 & Et logique & rs1 rs2\\ \hline
+            OR  & 0010 0010 & Ou logique & rs1 rs2\\ \hline
+            XOR & 0010 0011 & Xor logique & rs1 rs2\\ \hline
+            NOT & 0011 0001 & Non & rs1\\ \hline
+            SLL & 0011 0010 & Décalage gauche logique & rs1 \\ \hline
+            SRL & 0011 0011 & Décalage droite logique & rs1\\ \hline
         \end{tabular}
     \end{frame}
 
@@ -51,17 +51,17 @@
         \begin{center}
         \begin{tabular}{| c || c | c |}
             Instruction & Encodage & Description formelle \\ \hline
-            MOV   & 0000 1010 & rs1 $\gets$ rs2\\ \hline
-            MOVI  & 0000 1011 & rs1 $\gets$ immediate\\\hline
-            JMP   & 0000 1100 & P $\gets$ immediate\\ \hline
-            CMP   & 0000 1101 & \\ \hline
-            JE    & 0000 1110 &  Si ZF = 1 alors P $\gets$ immediate \\ \hline
-            JNE   & 0000 1111 & Si ZF =0 alors P$\gets$ immediate\\ \hline
-            JGE   & 0001 0000 & Si OF=SF alors P $\gets$ immediate\\ \hline
-            LOAD  & 0001 0001 & rs1 $\gets$ R[rs2]\\ \hline
-            STORE & 0001 0010 & R[rs2] $\gets$ rs1\\ \hline
-            LOADFIX  & 0001 0001 & rs1 $\gets$ R[immediate]\\ \hline
-            STOREFIX & 0001 0010 & R[immediate] $\gets$ rs1\\ \hline
+            MOV   & 0110 0001 & rs1 $\gets$ rs2\\ \hline
+            MOVI  & 0111 0001 & rs1 $\gets$ immediate\\\hline
+            CMP   & 1000 0001 & \\ \hline
+            JMP   & 0100 0001 & P $\gets$ immediate\\ \hline
+            JNE   & 0100 0010 & Si ZF =0 alors P$\gets$ immediate\\ \hline
+            JE    & 0100 0011 &  Si ZF = 1 alors P $\gets$ immediate \\ \hline
+            JGE   & 0100 0100 & Si OF=SF alors P $\gets$ immediate\\ \hline
+            LOAD  & 0101 0001 & rs1 $\gets$ R[rs2]\\ \hline
+            STORE & 0101 0010 & R[rs2] $\gets$ rs1\\ \hline
+            LOADFIX  & 0101 0011 & rs1 $\gets$ R[immediate]\\ \hline
+            STOREFIX & 0101 0100 & R[immediate] $\gets$ rs1\\ \hline
         \end{tabular}
     \end{center}
 
