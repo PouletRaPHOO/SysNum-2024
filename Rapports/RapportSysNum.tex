@@ -10,9 +10,133 @@
 
 \maketitle
 
+\part*{Netlist}
+
+\subsection*{Compilation}
+
+Afin de compiler le projet on utilisera : \verb|make| 
+
+et pour compiler uniquement le scheduler on pourra utiliser : \verb|make schedule| 
+
+
+\subsection*{Utilisation}
+
+Afin de simuler la netlist sur le fichier \verb|/test/*.net| on va utiliser la commande : 
+sh
+\begin{verbatim}./netlist_simulator.byte test/*.net\end{verbatim}
+
+Pour pouvoir utiliser des roms préinitialisée, on va pour chaque rom ident déclarée dans la netlist,
+on va fournir dans le dossier test (l'emplacement des roms peut être changé dans le \verb|netlist_simulator.ml|)
+un fichier \verb|ident.rom| selon la norme suivante:
+
+Chaque ligne correspond à un \textbf{VBitArray}, ou 0 correspond à \verb|false| et 1 à \verb|true|, Autrement dit pour encoder la \textbf{ROM} r : 
+
+\begin{tabular}{| c | c |}
+    true & false \\
+    false & false \\
+    false & true \\
+    false & true \\
+    true & true \\
+    false & false \\
+    false & false \\
+    false & false \\
+\end{tabular}
+
+on fournit le fichier \verb|r.rom| :
+
+\begin{verbatim}
+    10
+    00
+    01
+    01
+    11
+    00
+    00
+    00
+\end{verbatim}
+
+De plus si aucun fichier n'est fourni, la ROM est initialisée entièrement remplie de false. De même si toutes les lignes ne sont pas spécifiées dans le fichier elles sont également initialisées à false. Ainsi pour initialiser la ROM précédente on peut également fournir le fichier \verb|r.rom| :
+
+\begin{verbatim}
+    10
+    00
+    01
+    01
+    11
+\end{verbatim}
+
+De même pour rentrer dans un input un \textbf{VBitArray} \verb|[|false;true;false;false|]| on rentrera \verb|Valeur de a (array de taille 4): 0100|
+
+\subsection*{Spécifications }
+
+\subsubsection*{Scheduler }
+
+Le Scheduler commence par construire un graphe de dépendance entre toutes les variables. Puis ordonne les opérations selon un ordre topologique (s'il y en a un, sinon il renvoit une erreur \verb|Combinatorial_Cycle|).
+
+Il y a cependant 2 choses notables à remarquer lors du passage du scheduler :
+
+- On ne considère par l'opération \verb|REG| comme une opération de dépendance, puisque \verb|y = REG x| donne  à y la valeur de x à l'étape précédente (et donc n'est pas impactée par l'ordre de réassignation de x)
+- Lors d'un appel \verb|y = RAM _ _ ra we wa data|, seule \verb|ra| est considérée comme une dépendance, puisque comme l'on va faire tout les write de \textbf{RAM} à la fin de chaque étape, toutes dépendance relative à l'écriture n'impacte pas l'ordre de simulation de l'opération.
+
+\subsubsection*{Simulateur}
+\textbf{Specifications particulières }
+
+\underline{REG} :
+
+- L'assignation d'un registre utilise l'environnement final de la passe précédente (du pre-process s'il s'agit de la première passe). Ainsi la lecture de \verb|y = REG x| à la passe *n* assignera à \textbf{y} la valeur de \textbf{x} à la fin de la passe \textbf{n-1}. 
+
+\underline{NOT}:
+
+- L'application de \textbf{NOT} sur un array est effectuée bit à bit.
+
+\underline{BINOP}:
+
+- Une binop entre deux \textbf{VBit} est faite de façon normale
+
+- Une binop entre un \textbf{VBit b} et un \textbf{VBitArray a}  est faite bit à bit sur les éléments de \textbf{a} et \textbf{b}
+
+- Une binop entre deux \textbf{VBitArray a1,a2} renvoie un tableau de la taille minimum entre les deux arrays rempli des opérations bit à bit. 
+
+\underline{CONCAT}:
+
+- Une concat entre deux \textbf{VBitArray} agit de façon intuitive
+
+- Le reste des opérations possibles considèrent les \textbf{VBit} commes des \textbf{VBitArray} de taille 1
+
+\underline{SELECT}:
+
+- Une select sur un \textbf{VBit} n'est légale seulement si on sélectionne l'élément 0, dans ce cas elle renvoie le \textbf{VBit}
+
+- Une select sur des \textbf{VBitArray} agit de façon intuitive
+
+\underline{SLICE}:
+
+- Un slice n'est légal que sur un \textbf{VBitArray}
+
+\underline{MUX}:
+
+- On va considérer que l'argument de choix pointe vers le premier élément dans deux cas :
+
+  - C'est un \textbf{VBit true}
+
+  - C'est un \textbf{VBitArray} entièrement remplit de true
+
+- Dans tout les autres cas on renverra le deuxième élement
+
+\underline{ROM}:
+
+- Une addresse est forcément un \textbf{VBitArray} de taille inférieure ou égale à \verb|address_size|
+
+\underline{RAM}:
+
+- Pareil que pour \verb|ROM|
+
+
+\part*{Processeur}
+
 \section*{Architecture du processeur}
 
-L'architecture du processeur est une architecture proche de l'architecture Risc-V,
+L'architecture du processeur est une architecture proche de l'architecture x86,
 les instructions sont codées sur 32 bits. On a 16 registres accessibles,
 numérotés de 0 à 15, chacun de taille 32. On ajoute un register de 32
 bits correspondant à la position du pointeur sur la ROM, qu'on appelle P.
@@ -65,24 +189,6 @@ alors P $\gets$ immediate\\ \hline
     STOREFIX & 0101 0100 & Stocke dans la ram & rs1 immediate& R[immediate] $\gets$ rs1\\ \hline
 \end{tabular}
 
-
-\end{center}
-
-\section*{Si le temps nous le permet}
-
-\subsection*{Interface graphique}
-
-Implémentation d'une petite interface graphique
-et des instructions suivantes pour gérer l'interface
-
-\begin{center}
-
-\begin{tabular}{| c || c || c | c |}
-    Instruction & Encodage & Description & Arguments\\ \hline
-    PIX   & 0010 0001 & Change la valeur du pixel & rs1 rs2\\ \hline
-    CLEAR & 0010 0010 & Met toute l'interface graphique à 0 & \\ \hline
-    
-\end{tabular}
 
 \end{center}
 
