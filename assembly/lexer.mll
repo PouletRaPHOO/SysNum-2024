@@ -123,7 +123,7 @@ rule token = parse
     | instr as i  {id_or_kwd i}
     | entier as e {CST (decode_int e)}
     | pointer as p {POINT (decode_point p)}
-    | decltabl as d {DECL (decode_decla d)}
+    | decltabl as d {DECL (decode_decla d )}
     | eof  { EOF }
     | _ { raise (Lexing_error ("opérande non reconnue"))  }
 

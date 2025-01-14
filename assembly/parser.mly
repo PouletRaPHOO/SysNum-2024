@@ -43,7 +43,7 @@ expr:
       | d=exp SEMICOLON {Bexpr(d)}
       | LINEFEED {Linefeed}
       | l = LABEL {Label l}
-      | a = DECL {let i,s = a in Decla(i,s)}
+      | a = DECL SEMICOLON {let i,s = a in Decla(i,s)}
 
 exp:
     | b=binop i1 = REG i2 = REG {Ebinop(b,i1,i2)}

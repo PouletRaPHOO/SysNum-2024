@@ -4,5 +4,7 @@ MOV %r1 $2; //test commentaire
 MOV %r1 $3;
 MOV a %r1;
 MOV %r2 a;
-a[10];
+b[10];
 NOOP;
+MOV %r2 c;
+MOV %r2 *c;
