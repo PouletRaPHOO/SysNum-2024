@@ -39,7 +39,7 @@ def Alu(is_ari, is_bool, is_cmp, unary, add_code, arg1, arg2):
     bool_mux_val = Mux(e1, r_and, Mux(e2, r_or, r_xor))
 
 
-    unary_mux_val = Mux(e1, not_arg, Mux(e2, srl_arg, sll_arg))
+    unary_mux_val = Mux(e1, not_arg, Mux(e2, sll_arg, srl_arg))
     unary_mux_of = Mux(e1|e2, bit0, of_sll)
 
     val_final = Mux(is_ari|is_cmp, ari_mux_val, Mux(is_bool, bool_mux_val, unary_mux_val))

@@ -224,7 +224,7 @@ let prepass acc i (op:exp) =
     with
     | BadLength -> failwith "Mauvaise taille de fichier"
     | BadInput -> failwith "Mauvaise entrée"
-    | e ->  Printf.printf "%s" (Printexc.to_string e);(rams,Env.add i (emptyarr) roms,li) )
+    | e ->  (*Printf.printf "%s" (Printexc.to_string e);*)(rams,Env.add i (emptyarr) roms,li) )
 
   | _ -> (rams,roms,li)
 
