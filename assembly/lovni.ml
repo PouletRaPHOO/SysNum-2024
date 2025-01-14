@@ -75,25 +75,38 @@ let () =
                    let ei1,ei2,li = premier_passage (compteur) (l+1) n e1 e2 q in
                    ei1,ei2,(Bexpr(Emovi(i1,Env.find s e2)))::li
                                     ) else failwith ("Variable non définie : "^s)
+        | Decla(i, iden) ->assert (i>0); if Env.mem iden e2 then (failwith ("Déclaration de variable après première utilisation : "^iden)) else (
+           premier_passage (compteur+i) (l+1) (n+1) e1 (Env.add iden compteur e2) q)
         | _ as a -> let ei1,ei2, li = premier_passage compteur (l+1) n e1 e2 q in ei1,ei2,a::li
       )
     in
     let env_label,env_var, p2 = premier_passage 0 0 0 (Env.empty) (Env.empty) p in
 
-    let oc = open_out (Filename.concat "roms" "actual_op") in
+    let oc = open_out (Filename.concat "roms" "actual_op.rom") in
 
     let int_to_binary size va =
-       let s = ref "" in
-       let v = ref (abs va) in
-       let q =  ref (1 lsl (size-1)) in
-       for i = 1 to size do
-         let quotient = min (!v/(!q)) 1 in
-         v:= !v mod !q;
-         s := !s^(Lexer.string_of_char (Char.chr (Char.code ('0') +quotient)));
-         q:= !q/2;
-       done;
-       !s
-    in
+      let s = ref "" in
+      let v = ref (abs va) in
+      let q =  ref (1 lsl (size-1)) in
+      for i = 1 to size do
+        let quotient = min (!v/(!q)) 1 in
+        v:= !v mod !q;
+        s := !s^(Lexer.string_of_char (Char.chr (Char.code ('0') +quotient)));
+        q:= !q/2;
+      done;
+      if va<0 then begin
+        let rec neg st = match st with
+          | [] -> [], true
+          | x::t -> let li, ret = neg t in
+                    (match x,ret with
+                     | '0', false | '1', true-> '1'::li,false
+                     | '1', false -> '0'::li, false
+                     | '0', true -> '0'::li, true
+                    ) in
+        let jedetestemavie,offff = neg (Lexer.explode (!s)) in
+        Lexer.implode jedetestemavie
+        end
+      else (!s) in
 
     let find_binop_type b = match b with
       | Add | Sub | Mul -> "0001"
