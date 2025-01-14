@@ -71,6 +71,35 @@
     \begin{frame}
         \tableofcontents[currentsection, hideothersubsections]
     \end{frame}
+\begin{frame}{L'assembleur}
+  \begin{itemize}
+      \item Fait en OCaml : Ocamllex + Menhir
+      \item Syntaxe : [NOM DE L'OP] $\it{arg1}$ $\it{arg2}$;
+      \item Ajout de variables nommées, de label et commentaires.
+      \item Syntaxe similaire à l'appel machine pour toutes les opérations sauf pour les MOV
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Fonctionnement des MOV}
+  \begin{itemize}
+    \item reg $\gets$ reg : MOV $\%r\it{numReg1}$ $\%r\it{numReg2}$;
+    \item var $\gets$ reg : MOV $\%r\it{numReg}$ $\it{varName}$;
+    \item var $\gets$ reg : MOV $\it{varName}$ $\it{\%r\it{numReg}}$;
+    \item reg $\gets$ var (par pointeur): LOAD $\%r\it{numReg1}$ $\%r\it{numReg2}$;
+    \item reg $\gets$ var (par pointeur): LOAD $\%r\it{numReg1}$ $\it{numReg2}$;
+    \item reg $\gets$ immediate (Valeur immédiate ou pointeur de variable): MOV $\%r\it{numReg1}$ $(\$\it{immediate}|*\it{varName})$;
+  \end{itemize}
+\end{frame}
+\begin{frame}{Fonctionnement des Variables}
+  \begin{itemize}
+      \item Fonctionne avec la RAM ($2^{16}$ variables possibles (32-bit))
+      \item Pas besoin de déclarer les variables(sauf pour les tableaux)
+      \item Remplacé pendant la compilation par leur numéro (avec un environnement)
+      \item Même environnement utilisé pour les pointeurs
+  \end{itemize}
+\end{frame}
+
+
 \section{Horloge}
     \begin{frame}
         \tableofcontents[currentsection, hideothersubsections]
@@ -97,6 +126,8 @@
         \item Implémentation peu efficace de SLL 
     \end{itemize}
 \end{frame}
+
+
 
 \subsection{Spécificité}
 
