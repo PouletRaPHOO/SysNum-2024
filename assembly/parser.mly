@@ -8,6 +8,7 @@
 
 /* Déclaration des tokens */
 
+%token <int*string> DECL
 %token <string> POINT
 %token <int> CST
 %token <string> VAR
@@ -42,6 +43,7 @@ expr:
       | d=exp SEMICOLON {Bexpr(d)}
       | LINEFEED {Linefeed}
       | l = LABEL {Label l}
+      | a = DECL {let i,s = a in Decla(i,s)}
 
 exp:
     | b=binop i1 = REG i2 = REG {Ebinop(b,i1,i2)}
@@ -56,6 +58,7 @@ exp:
     | j=jump i = VAR {Ejump(j,i)}
     | CMP i1 = REG i2 = REG {Ecmp(i1,i2)}
     | NOOP {Enoop}
+
 %inline jump:
     | JMP {Jmp}
     | JE {Je}

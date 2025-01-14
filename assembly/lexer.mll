@@ -73,20 +73,21 @@
         | a::t-> a::(decode_label t)
 
 
-    let rec decode_decla1 = function
+    let rec decode_decla1 : char list -> char list *char list = function
         | [] ->  failwith "pas normal"
         | '['::l -> [],l
-        | a::t-> a::(decode_label t)
+        | a::t-> let a1,a2  = decode_decla1 t in (a::a1, a2)
 
     let rec decode_decla2 = function
         | [] ->  failwith "pas normal"
         | [']'] -> []
-        | a::t-> a::(decode_label t)
+        | a::t-> a::(decode_decla2 t)
+
 
     let decode_decla d =
       let a1,a2 = decode_decla1 (explode d) in
       let e1 = implode (decode_decla2 a2) in
-      (implode a1, int_of_string e1)
+      (int_of_string e1, implode a1)
 
 
 
@@ -122,6 +123,7 @@ rule token = parse
     | instr as i  {id_or_kwd i}
     | entier as e {CST (decode_int e)}
     | pointer as p {POINT (decode_point p)}
+    | decltabl as d {DECL (decode_decla d)}
     | eof  { EOF }
     | _ { raise (Lexing_error ("opérande non reconnue"))  }
 
