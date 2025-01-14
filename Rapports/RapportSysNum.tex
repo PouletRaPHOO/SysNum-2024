@@ -10,6 +10,42 @@
 
 \maketitle
 
+\part*{Comment compiler ?}
+
+\section*{Compilation de l'horloge}
+
+Pour compiler l'horloge, il faut se placer dans le dossier principal et executer un \verb|make run| si l'on veut avoir un fonctionnement en temps normal, c'est à  dire une seconde toutes les secondes. Si l'on veut avoir un fonctionnement rapide, il suffit d'executer un \verb|make runfast|.
+
+Ces deux commandes font les actions suivantes :
+
+ - compilation de la netlist
+
+ - compilation du code assembleur de l'horloge
+
+ - création du fichier \verb|main.net| avec carotte
+
+ - appel du simulateur de netlist sur \verb|main.net|
+
+\section*{Structure de l'assembleur}
+
+Le dossier netlist contient le simulateur de netlist, le dossier assembly contient la définition de l'assembleur, le dossier roms contient la rom obtenue par execution de l'assembleur sur clock.lv (resp. clockfast.lv) pour une utilisation normale (resp. rapide).
+
+Dans Utils, on trouvera les codes de l'ALU et de quelques fonctions utilitaires pour notre fichier principal \verb|main.py| dont la netlist associée (après compilation par carotte) est \verb|main.net|
+
+\section*{Options de $netlist\_simulator$}
+
+Les options sont les suivantes:
+
+- -help : affiche les options
+
+- -n : nombre de tours
+
+- -ten : affiche les nombres en base 10
+
+- -clock : affiche sous forme compatible avec une horloge
+
+- -sec : affiche seulement lorsque la variable \verb|sec| est actualisée
+
 \part*{Netlist}
 
 \subsection*{Compilation}
@@ -139,7 +175,8 @@ Il y a cependant 2 choses notables à remarquer lors du passage du scheduler :
 L'architecture du processeur est une architecture proche de l'architecture x86,
 les instructions sont codées sur 32 bits. On a 16 registres accessibles,
 numérotés de 0 à 15, chacun de taille 32. On ajoute un register de 32
-bits correspondant à la position du pointeur sur la ROM, qu'on appelle P.
+bits correspondant à la position du pointeur sur la ROM, qui correspond
+au programme lu en cours, qu'on appelle P.
 On se munit de trois flags : ZF (dernière opération a renvoyé 0 ou non), SF
 (positivité de la dernière opération), OF (overflow de la dernière
 opération arithmétique) tous de taille 1.
