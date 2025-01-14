@@ -15,9 +15,25 @@ netlist_:
 	rm test.net
 	python3 carotte.py/carotte.py test.py > test.net
 
-exec:
-	./netlist_simulator.byte test.net
+test:
+	cd netlist
+	mkdir test_dos
 
-net_test:
-	./netlist_simulator.byte -n 5 main.net
+compil_sim:
+	cd netlist; \
+	rm -f netlist_simulator.byte; \
+	ocamlbuild netlist_simulator.byte
+
+compil_clock:
+	./assembly/lovni.exe clock.lv
+
+compil_netlist:
+	rm -f main.net
+	python3 carotte.py/carotte.py main.py > main.net
+
+run:
+	make compil_sim
+	make compil_clock
+	make compil_netlist
+	./netlist/netlist_simulator.byte -ten -sec -clock main.net
 # end

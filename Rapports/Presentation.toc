@@ -1,0 +1,6 @@
+\beamer@sectionintoc {1}{Principe général}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{Architecture}{4}{0}{1}
+\beamer@subsectionintoc {1}{2}{Jeu d'instruction}{5}{0}{1}
+\beamer@sectionintoc {2}{Assembleur}{7}{0}{2}
+\beamer@sectionintoc {3}{Horloge}{8}{0}{3}
+\beamer@subsectionintoc {3}{1}{Utilité}{9}{0}{3}
